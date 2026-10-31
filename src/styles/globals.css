@@ -1,0 +1,278 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens extracted from the Figma file. The product has a single dark
+ * identity: there is no light frame, so no light theme is declared.
+ *
+ * Layer 1 (:root, --kurio-*): raw Figma values.
+ * Layer 2 (:root, shadcn names): semantic roles consumed by shadcn/ui.
+ * Layer 3 (@theme): what Tailwind exposes as utilities.
+ */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --kurio-ink: #140d0a;
+  --kurio-surface-card: #241612;
+  --kurio-surface-raised: #2f1d15;
+  --kurio-surface-dark: #38220f;
+  --kurio-border: #3f2319;
+  --kurio-border-soft: #55321f;
+
+  /* Brand */
+  --kurio-primary: #d28a4c;
+  --kurio-primary-light: #dd9a5f;
+  --kurio-primary-dark: #c47b3e;
+  --kurio-amber: #e3a44e;
+  --kurio-tan: #b39463;
+
+  /* Text */
+  --kurio-cream: #f5f1eb;
+  --kurio-text-secondary: #cfb28c;
+  --kurio-text-accent: #e89b55;
+  /* The "Text/Coral" style description says #EA6B4F; all 40 layers apply #F0805F. */
+  --kurio-coral: #f0805f;
+
+  /* Status */
+  --kurio-success: #00a66c;
+  /* Not applied in any frame. 4.39:1 on ink, so reserved for non-text marks. */
+  --kurio-error: #ed1b2e;
+
+  /* Semantic roles */
+  --background: var(--kurio-ink);
+  --foreground: var(--kurio-cream);
+  --card: var(--kurio-surface-card);
+  --card-foreground: var(--kurio-cream);
+  --popover: var(--kurio-surface-raised);
+  --popover-foreground: var(--kurio-cream);
+  --primary: var(--kurio-primary);
+  --primary-foreground: var(--kurio-ink);
+  /* shadcn "secondary" is a quiet surface; Figma's Color/Secondary is exposed as `tan`. */
+  --secondary: var(--kurio-surface-raised);
+  --secondary-foreground: var(--kurio-cream);
+  --muted: var(--kurio-surface-raised);
+  --muted-foreground: var(--kurio-text-secondary);
+  --accent: var(--kurio-surface-dark);
+  --accent-foreground: var(--kurio-cream);
+  /* Coral keeps 7.29:1 on ink; #ED1B2E fails 4.5:1 for text in both directions. */
+  --destructive: var(--kurio-coral);
+  --destructive-foreground: var(--kurio-ink);
+  --border: var(--kurio-border);
+  --input: var(--kurio-border);
+  --ring: var(--kurio-text-accent);
+  --radius: 0.375rem;
+
+  --gradient-primary: linear-gradient(136.7deg, #d28a4c 0%, rgb(210 138 76 / 0.8) 100%);
+  --gradient-surface: linear-gradient(134.8deg, #241612 0%, #2f1d15 100%);
+  --shimmer-highlight: rgb(245 241 235 / 0.08);
+}
+
+@theme inline {
+  --font-sans: 'Roboto Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-mono: 'Roboto Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+  /* Only Figma colours exist as utilities: Tailwind's default palette is removed. */
+  --color-*: initial;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-light: var(--kurio-primary-light);
+  --color-primary-dark: var(--kurio-primary-dark);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-ink: var(--kurio-ink);
+  --color-surface-card: var(--kurio-surface-card);
+  --color-surface-raised: var(--kurio-surface-raised);
+  --color-surface-dark: var(--kurio-surface-dark);
+  --color-border-soft: var(--kurio-border-soft);
+  --color-amber: var(--kurio-amber);
+  --color-tan: var(--kurio-tan);
+  --color-content-secondary: var(--kurio-text-secondary);
+  --color-content-subtle: var(--kurio-tan);
+  --color-content-accent: var(--kurio-text-accent);
+  --color-content-coral: var(--kurio-coral);
+  --color-success: var(--kurio-success);
+  --color-error: var(--kurio-error);
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-gray-light: #ededed;
+  --color-elevated: #fbfbfb;
+
+  /* Third-party marks (social sign-in and wallets) */
+  --color-logo-facebook: #3b5999;
+  --color-logo-google-blue: #4086f4;
+  --color-logo-google-green: #59c36a;
+  --color-logo-google-yellow: #ffda2d;
+  --color-logo-blue: #4175df;
+  --color-logo-light-blue: #03a9f4;
+  --color-logo-indigo: #283593;
+  --color-logo-orange: #ff641a;
+
+  /* Type scale. Line heights use the Figma value of the dominant multi-line usage. */
+  --text-micro: 0.5625rem;
+  --text-micro--line-height: 1.32;
+  --text-tiny: 0.625rem;
+  --text-tiny--line-height: 1.32;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.375rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.375rem;
+  --text-md: 0.9375rem;
+  --text-md--line-height: 1.32;
+  --text-base: 1rem;
+  --text-base--line-height: 1.32;
+  --text-body-lg: 1.0625rem;
+  --text-body-lg--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.5rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.75rem;
+  --text-title-sm: 1.3125rem;
+  --text-title-sm--line-height: 1.75rem;
+  --text-title: 1.375rem;
+  --text-title--line-height: 1.8125rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 1.32;
+  --text-3xl: 1.75rem;
+  --text-3xl--line-height: 1.32;
+  --text-4xl: 2rem;
+  --text-4xl--line-height: 1.32;
+  --text-display: 2.6875rem;
+  --text-display--line-height: 4.375rem;
+
+  /* Every tracked style in Figma is 10% of its font size, plus the 0.1px micro label. */
+  --tracking-wide: 0.1em;
+  --tracking-micro: 0.1px;
+
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-control: 5px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 16px;
+  --radius-3xl: 20px;
+  --radius-pill: 40px;
+
+  --shadow-card: 0 4px 12px -2px rgb(20 13 10 / 0.149);
+  --shadow-card-lg: 0 6.6px 19.8px -3.3px rgb(20 13 10 / 0.149);
+  --shadow-ambient: 0 0 20px 0 rgb(10 6 4 / 0.45);
+  --shadow-ambient-lg: 0 0 40px 0 rgb(10 6 4 / 0.45);
+  --shadow-float: 0 6px 20px 0 rgb(10 6 4 / 0.45);
+  --shadow-drop: 0 20px 20px 0 rgb(10 6 4 / 0.45);
+  --shadow-sheet: 0 -10px 30px 0 rgb(10 6 4 / 0.45);
+
+  /*
+   * Figma spacing lands on Tailwind's 4px grid (4, 6, 8, 10, 12, 16, 20, 24, 28,
+   * 32, 40, 48, 96), so the default --spacing stays. Only layout values are named.
+   */
+  --spacing-gutter: 1.5rem;
+  --spacing-gutter-md: 2.5rem;
+  --container-content: 75rem;
+
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+
+  @keyframes shimmer {
+    to {
+      transform: translateX(100%);
+    }
+  }
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: var(--text-md);
+    line-height: var(--text-md--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+/* Mobile first: 24px gutter up to tablet, 40px from there, capped at the 1200px grid. */
+@utility page-container {
+  width: 100%;
+  max-width: calc(var(--container-content) + 2 * var(--spacing-gutter-md));
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+
+  @variant md {
+    padding-inline: var(--spacing-gutter-md);
+  }
+}
+
+@utility bg-gradient-primary {
+  background-image: var(--gradient-primary);
+}
+
+@utility bg-gradient-surface {
+  background-image: var(--gradient-surface);
+}
+
+/* Composited sweep (transform only): loading states must not trigger repaints. */
+@utility shimmer {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--muted);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(90deg, transparent, var(--shimmer-highlight), transparent);
+    transform: translateX(-100%);
+    animation: var(--animate-shimmer);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Skeletons stay as static placeholders instead of ending on a highlight. */
+  .shimmer::after {
+    display: none;
+  }
+}
