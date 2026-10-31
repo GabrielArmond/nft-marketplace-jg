@@ -1,0 +1,32 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+*.tsbuildinfo
+
+# TanStack Router plugin cache (src/routeTree.gen.ts stays versioned)
+.tanstack
+
+# Environment: only the example is versioned
+.env
+.env.*
+!.env.example
+
+# Test and audit output
+coverage
+playwright-report
+test-results
+.lighthouseci
+
+# Deployment
+.vercel
+
+# Logs and local tooling
+.claude/
+*.log
+*.local
+.DS_Store
+.idea
+.vscode/*
+!.vscode/extensions.json
