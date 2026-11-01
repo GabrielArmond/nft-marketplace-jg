@@ -76,6 +76,7 @@ export function AuthDialog({ mode, expired, onClose, onDone, onSwitch }: AuthDia
       }}
     >
       <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 z-50 bg-background/80" />
         <Dialog.Content
           className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-background px-7 pt-20 pb-6 md:inset-auto md:top-1/2 md:left-1/2 md:max-h-[calc(100dvh-2rem)] md:w-125 md:-translate-x-1/2 md:-translate-y-1/2 md:border-b-10 md:border-primary md:bg-card md:px-0 md:pt-12 md:pb-16 md:shadow-ambient-lg"
           aria-describedby={undefined}
