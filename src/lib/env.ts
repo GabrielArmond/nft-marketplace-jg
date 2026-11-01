@@ -15,4 +15,6 @@ function parseTimeout(value: string | undefined): number {
 export const env = {
   apiBaseUrl: import.meta.env.VITE_API_BASE_URL?.trim() || DEFAULT_API_BASE_URL,
   apiTimeoutMs: parseTimeout(import.meta.env.VITE_API_TIMEOUT_MS),
+  /** Socket.IO origin; `undefined` means the page's own origin. */
+  socketUrl: import.meta.env.VITE_SOCKET_URL?.trim() || undefined,
 } as const

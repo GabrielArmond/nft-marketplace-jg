@@ -8,6 +8,8 @@ export const httpClient = axios.create({
   baseURL: env.apiBaseUrl,
   timeout: env.apiTimeoutMs,
   headers: { Accept: 'application/json' },
+  // The session lives in a cookie: JavaScript never handles a token.
+  withCredentials: true,
   transitional: { clarifyTimeoutError: true },
 })
 
