@@ -3,9 +3,19 @@ export interface AuthSearch {
   reason?: 'expired' | undefined
 }
 
-/** Only same-origin paths: `redirect` comes from the URL and could point anywhere. */
+const AUTH_SCREEN = /^\/(login|cadastro)([/?#]|$)/
+
+/**
+ * Only same-origin paths: `redirect` comes from the URL and could point anywhere.
+ * Auth screens are refused too: returning to one would chain redirects forever.
+ */
 function isSafeRedirect(value: unknown): value is string {
-  return typeof value === 'string' && value.startsWith('/') && !/^\/[/\\]/.test(value)
+  return (
+    typeof value === 'string' &&
+    value.startsWith('/') &&
+    !/^\/[/\\]/.test(value) &&
+    !AUTH_SCREEN.test(value)
+  )
 }
 
 /**
