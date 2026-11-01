@@ -108,10 +108,19 @@ export function requireUser(): UserRecord {
   return user
 }
 
+/** Reading a lapsed session ends it: the visitor must be able to keep using a guest cart. */
 export function getSession(): Session {
-  const user = requireUser()
   const record = findActiveRecord()
-  if (!record) throw new MockHttpError(401, API_ERROR_CODES.sessionExpired, 'Sua sessão expirou.')
+  const user = getDb().users.find(({ id }) => id === record?.userId)
+
+  if (!record || !user) {
+    const hadCookie = hasSessionCookie()
+    endSession()
+    if (hadCookie) {
+      throw new MockHttpError(401, API_ERROR_CODES.sessionExpired, 'Sua sessão expirou.')
+    }
+    throw new MockHttpError(401, API_ERROR_CODES.sessionInvalid, 'Entre para continuar.')
+  }
   return toSession(user, record)
 }
 
