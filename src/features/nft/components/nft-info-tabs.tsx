@@ -1,20 +1,15 @@
 import { Tabs } from 'radix-ui'
 
 import type { NftDetail } from '@/contracts/nfts'
-import { NETWORK_LABELS } from '@/features/catalog/search-params'
 
 const TAB =
   'border-b-2 border-transparent pb-2 text-base md:text-lg data-[state=active]:border-primary data-[state=active]:font-bold data-[state=active]:text-content-accent'
 const LABEL = 'text-sm leading-6 font-bold'
 const TEXT = 'text-sm leading-6 text-content-secondary'
 
-function shortAddress(address: string): string {
-  return `${address.slice(0, 6)}...${address.slice(-4)}`
-}
-
 /** Figma swaps the "Contrato" and "Direitos autorais" texts: each sits under its own label here. */
 export function NftInfoTabs({ nft }: { nft: NftDetail }) {
-  const { name, network, contractAddress, royaltyPercent, reviewCount, description } = nft
+  const { name, reviewCount, story, creator, networkNote, contractNote, royaltyNote } = nft
 
   return (
     <Tabs.Root defaultValue="detalhes" className="px-6 md:px-0">
@@ -31,26 +26,28 @@ export function NftInfoTabs({ nft }: { nft: NftDetail }) {
       </Tabs.List>
 
       <Tabs.Content value="detalhes" className="flex flex-col gap-3 pt-3">
-        <p className={TEXT}>{description}</p>
+        <div className="flex flex-col gap-6">
+          {story.map((paragraph) => (
+            <p key={paragraph} className={TEXT}>
+              {paragraph}
+            </p>
+          ))}
+        </div>
+        <div>
+          <h3 className={LABEL}>Criador:</h3>
+          <p className={TEXT}>{creator}</p>
+        </div>
         <div>
           <h3 className={LABEL}>Rede:</h3>
-          <p className={TEXT}>
-            Cunhado na {NETWORK_LABELS[network]} com procedência imutável e metadados armazenados no
-            IPFS.
-          </p>
+          <p className={TEXT}>{networkNote}</p>
         </div>
         <div>
           <h3 className={LABEL}>Contrato:</h3>
-          <p className={TEXT}>
-            {shortAddress(contractAddress)} • Contrato inteligente ERC-721 verificado.
-          </p>
+          <p className={TEXT}>{contractNote}</p>
         </div>
         <div>
           <h3 className={LABEL}>Direitos autorais:</h3>
-          <p className={TEXT}>
-            Direitos autorais do criador: {royaltyPercent}% nas vendas secundárias, pagos
-            automaticamente pelos mercados compatíveis.
-          </p>
+          <p className={TEXT}>{royaltyNote}</p>
         </div>
       </Tabs.Content>
 
