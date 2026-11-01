@@ -8,7 +8,8 @@ import {
 } from '@/mocks/fixtures/accounts'
 import { createNftFixtures } from '@/mocks/fixtures/nfts'
 
-export const DB_SCHEMA_VERSION = 1
+// Bump when fixtures change shape: stored databases of older versions are discarded.
+export const DB_SCHEMA_VERSION = 2
 export const DEFAULT_SCENARIO_ID = 'default'
 export const DEFAULT_SEED = 1
 

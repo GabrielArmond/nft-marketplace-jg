@@ -61,6 +61,12 @@ export type NftSummary = z.infer<typeof nftSummarySchema>
 
 export const nftDetailSchema = z.extend(nftSummarySchema, {
   description: z.string(),
+  creator: z.string(),
+  /** Paragraphs of the "Detalhes do NFT" tab. */
+  story: z.array(z.string()),
+  networkNote: z.string(),
+  contractNote: z.string(),
+  royaltyNote: z.string(),
   attributes: z.array(z.string()),
   gallery: z.array(imageSchema),
   defaultEditionId: z.string(),

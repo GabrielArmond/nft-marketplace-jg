@@ -21,6 +21,46 @@ const ART_NOUN: Record<Art, string> = {
   golden: 'Beat',
 }
 
+const ART_ATTRIBUTES: Record<Art, readonly string[]> = {
+  emerald: ['Óculos', 'Esmeralda'],
+  nomad: ['Chapéu', 'Moletom'],
+  baron: ['Blazer', 'Gola alta'],
+  golden: ['Fones', 'Jaqueta'],
+}
+
+const EXTRA_TRAITS = [
+  'Fundo creme',
+  'Fundo sálvia',
+  'Corrente dourada',
+  'Brinco',
+  'Pelagem clara',
+  'Olhar sereno',
+  'Sorriso discreto',
+] as const
+
+const ART_CREATOR: Record<Art, string> = {
+  emerald: 'Nova Sato',
+  nomad: 'Iris Moreau',
+  baron: 'Dante Reis',
+  golden: 'Lia Tavares',
+}
+
+const ART_THEME: Record<Art, string> = {
+  emerald: 'A obra explora identidade, movimento e luz em um mundo digital sem fronteiras.',
+  nomad: 'A obra explora memória, calma e pertencimento em paisagens digitais em transição.',
+  baron: 'A obra explora presença, elegância e poder em retratos da cultura digital.',
+  golden: 'A obra explora som, ritmo e energia na fronteira entre música e imagem.',
+}
+
+const NETWORK_NAMES: Record<Network, string> = {
+  ethereum: 'Ethereum',
+  polygon: 'Polygon',
+  solana: 'Solana',
+}
+
+const GALLERY_SIZE = 4
+const ROYALTY_PERCENT = 5
+
 const ADJECTIVES = [
   'Amber',
   'Copper',
@@ -124,10 +164,24 @@ interface NftSeed {
   soldOut: boolean
 }
 
+/** Deterministic: the first NFT keeps the Figma list, and the rest vary by position. */
+function attributesOf({ art, isRare }: NftSeed, index: number): string[] {
+  const trait = EXTRA_TRAITS[index % EXTRA_TRAITS.length]
+
+  return [
+    ...ART_ATTRIBUTES[art],
+    ...(index > 0 && trait ? [trait] : []),
+    isRare ? 'Raro' : 'Comum',
+  ]
+}
+
 function buildNft(seed: NftSeed, index: number): NftRecord {
   const id = slug(seed.name)
   const alt = ART_ALT[seed.art]
   const editions = buildEditions(id, seed.priceEth, index, seed.soldOut)
+  const network = NETWORK_NAMES[seed.network]
+  const creator = ART_CREATOR[seed.art]
+  const contractAddress = `0x7A42${seed.tokenId.padStart(32, '0')}19E8`
 
   return {
     id,
@@ -143,13 +197,22 @@ function buildNft(seed: NftSeed, index: number): NftRecord {
     soldOut: seed.soldOut,
     listedAt: new Date(FIRST_LISTED_AT_MS - index * DAY_MS).toISOString(),
     version: 1,
-    description: `${seed.name} é um colecionável digital finalizado à mão da coleção Kurio Editions, verificado e pronto para a sua carteira. \n AAAA`,
-    attributes: ['Óculos', 'Esmeralda', seed.isRare ? 'Raro' : 'Comum'],
-    gallery: ART_ORDER.map((art) => image(art, ART_ALT[art])),
+    description: `${seed.name} é um colecionável digital finalizado à mão da coleção Kurio Editions, verificado e pronto para a sua carteira.`,
+    creator,
+    story: [
+      `${seed.name} é uma obra digital 1/50 finalizada à mão da coleção Kurio Editions. Cada atributo fica armazenado nos metadados do token e verificado na ${network}. ${ART_THEME[seed.art]}`,
+      `A propriedade inclui a arte em alta resolução, lançamentos exclusivos para colecionadores e um registro permanente de procedência registrada na rede. ${creator} recebe ${ROYALTY_PERCENT.toString()}% de direitos autorais nas vendas secundárias, apoiando novos trabalhos e lançamentos da comunidade.`,
+    ],
+    networkNote: `Cunhado na ${network} com procedência imutável e metadados armazenados no IPFS.`,
+    contractNote: `${contractAddress.slice(0, 6)}...${contractAddress.slice(-4)} • Contrato inteligente ERC-721 verificado.`,
+    royaltyNote: `Direitos autorais do criador: ${ROYALTY_PERCENT.toString()}% nas vendas secundárias, pagos automaticamente pelos mercados compatíveis.`,
+    attributes: attributesOf(seed, index),
+    // The same artwork on every slide, as in the Figma detail frame.
+    gallery: Array.from({ length: GALLERY_SIZE }, () => image(seed.art, alt)),
     defaultEditionId: `${id}:1-50`,
     editions,
-    contractAddress: `0x7A42${seed.tokenId.padStart(32, '0')}19E8`,
-    royaltyPercent: 5,
+    contractAddress,
+    royaltyPercent: ROYALTY_PERCENT,
     rating: 4 + (index % 10) / 10,
     reviewCount: 19 + index,
     trendingScore: (index * 17) % 53,
