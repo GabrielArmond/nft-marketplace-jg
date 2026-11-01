@@ -1,6 +1,7 @@
 import { Link, useRouterState } from '@tanstack/react-router'
 
-import { CartIcon, LoginIcon, SearchIcon } from '@/components/icons/icons'
+import { CartIcon, LoginIcon } from '@/components/icons/icons'
+import { HeaderSearch } from '@/components/layout/header-search'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useSession } from '@/features/auth/hooks'
@@ -52,7 +53,7 @@ export function SiteHeader() {
           <Link
             to="/"
             hash=""
-            activeOptions={{ exact: true, includeHash: true }}
+            activeOptions={{ exact: true, includeHash: true, includeSearch: false }}
             className={NAV_ITEM}
             activeProps={{ className: 'border-primary font-bold text-content-accent' }}
             inactiveProps={{ className: 'border-transparent' }}
@@ -75,9 +76,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-7 pb-2.5">
-          <Link to="/" hash="catalogo" aria-label="Buscar no catálogo">
-            <SearchIcon className="size-5" />
-          </Link>
+          <HeaderSearch />
           <Link
             to="/carrinho"
             aria-label={`Carrinho, ${cartCount.toString()} ${cartCount === 1 ? 'item' : 'itens'}`}

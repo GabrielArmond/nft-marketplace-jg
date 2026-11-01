@@ -41,7 +41,7 @@ export function TabBar() {
           to="/"
           aria-label="Início"
           className={TAB}
-          activeOptions={{ exact: true }}
+          activeOptions={{ exact: true, includeSearch: false }}
           {...TAB_STATES}
         >
           <TabIcon icon={HomeIcon} />

@@ -101,7 +101,7 @@ function Newsletter() {
 export function SiteFooter() {
   return (
     <footer className="page-container mt-16 pb-36 md:pb-0">
-      <div className="grid gap-8 bg-card p-6 md:grid-cols-2 xl:grid-cols-[15.625rem_15.625rem_15.625rem_1fr] xl:gap-6 xl:p-8">
+      <div className="grid gap-8 bg-card p-6 md:grid-cols-2 xl:grid-cols-[16rem_16rem_16rem_1fr] xl:gap-6 xl:p-8">
         {FEATURES.map(({ letter, title, text }) => (
           <div key={letter} className="flex flex-col gap-3 xl:border-r xl:border-primary xl:pr-4">
             <span
