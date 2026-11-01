@@ -8,10 +8,11 @@ dist
 # TanStack Router plugin cache (src/routeTree.gen.ts stays versioned)
 .tanstack
 
-# Environment: only the example is versioned
+# Environment: only files without secrets are versioned
 .env
 .env.*
 !.env.example
+!.env.demo
 
 # Test and audit output
 coverage

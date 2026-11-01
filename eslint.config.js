@@ -8,7 +8,7 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default defineConfig([
-  globalIgnores(['dist', 'src/routeTree.gen.ts']),
+  globalIgnores(['dist', 'src/routeTree.gen.ts', 'public/mockServiceWorker.js']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -28,6 +28,8 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/consistent-type-imports': 'error',
+      // Omitting a field with a rest pattern is the way to strip internal data.
+      '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
       // The shadcn registry emits `from "cn"`, which ignores the project's theme tokens.
       'no-restricted-imports': [
         'error',
