@@ -13,6 +13,7 @@ export const collectorSchema = z.object({
   displayName: z.string('Informe o nome de exibição.').check(z.minLength(1, 'Informe o nome de exibição.')),
   username: z.string('Informe o nome de usuário.').check(z.minLength(1, 'Informe o nome de usuário.')),
   email: emailSchema,
+  profileName: z.optional(z.string()),
   referralCode: z.optional(z.string()),
   ensName: z.optional(z.string()),
   note: z.optional(z.string().check(z.maxLength(500, 'Use até 500 caracteres.'))),
