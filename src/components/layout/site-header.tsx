@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useSession } from '@/features/auth/hooks'
 import { useCartCount } from '@/features/cart/hooks'
+import { cn } from '@/lib/utils'
 
 const UNAVAILABLE_ITEMS = ['Criadores', 'Aprenda']
 const NAV_ITEM = 'border-b-2 pb-6 text-base'
+const MARKET_PATHS = ['/nft/', '/carrinho']
 
 function AccountAction() {
   const { data: session, isPending } = useSession()
@@ -40,6 +42,9 @@ function AccountAction() {
 /** Desktop and tablet only: below `md` the Figma navigation is the bottom tab bar. */
 export function SiteHeader() {
   const cartCount = useCartCount()
+  const inMarket = useRouterState({
+    select: ({ location }) => MARKET_PATHS.some((path) => location.pathname.startsWith(path)),
+  })
 
   return (
     <header className="page-container hidden md:block">
@@ -60,7 +65,15 @@ export function SiteHeader() {
           >
             Início
           </Link>
-          <Link to="/" hash="catalogo" className={`${NAV_ITEM} border-transparent`}>
+          <Link
+            to="/"
+            hash="catalogo"
+            aria-current={inMarket ? 'page' : undefined}
+            className={cn(
+              NAV_ITEM,
+              inMarket ? 'border-primary font-bold text-content-accent' : 'border-transparent',
+            )}
+          >
             Mercado
           </Link>
           {UNAVAILABLE_ITEMS.map((item) => (

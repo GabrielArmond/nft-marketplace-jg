@@ -9,6 +9,7 @@ import {
   YoutubeIcon,
 } from '@/components/icons/icons'
 import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
 const FEATURES = [
   {
@@ -87,7 +88,7 @@ function Newsletter() {
       </form>
       {notice ? (
         <p role="status" className="text-caption text-content-secondary">
-          A assinatura de novidades não está disponível nesta demonstração.
+          A assinatura de novidades não está disponível.
         </p>
       ) : (
         <p className="text-caption text-content-secondary">
@@ -98,9 +99,9 @@ function Newsletter() {
   )
 }
 
-export function SiteFooter() {
+export function SiteFooter({ className }: { className?: string | undefined }) {
   return (
-    <footer className="page-container mt-16 pb-36 md:pb-0">
+    <footer className={cn('page-container mt-16 pb-36 md:pb-0', className)}>
       <div className="grid gap-8 bg-card p-6 md:grid-cols-2 xl:grid-cols-[16rem_16rem_16rem_1fr] xl:gap-6 xl:p-8">
         {FEATURES.map(({ letter, title, text }) => (
           <div key={letter} className="flex flex-col gap-3 xl:border-r xl:border-primary xl:pr-4">
