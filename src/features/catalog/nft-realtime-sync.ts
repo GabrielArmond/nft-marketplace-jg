@@ -3,7 +3,7 @@ import type { QueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/app/query-keys'
 import type { Cart } from '@/contracts/cart'
 import type { NftUpdatedEvent } from '@/contracts/events'
-import type { NftDetail, NftList, NftSummary } from '@/contracts/nfts'
+import type { Favorites, NftDetail, NftList, NftSummary } from '@/contracts/nfts'
 import { createEventGate } from '@/lib/realtime/event-gate'
 import { onNftUpdated, onRealtimeConnect } from '@/lib/realtime/socket-client'
 
@@ -22,6 +22,12 @@ function applyToCache(queryClient: QueryClient, event: NftUpdatedEvent): void {
     list && {
       ...list,
       items: list.items.map((item) => (item.id === nftId ? patchNft(item, event) : item)),
+    },
+  )
+
+  queryClient.setQueryData<Favorites>(queryKeys.favorites, (favorites) =>
+    favorites && {
+      items: favorites.items.map((item) => (item.id === nftId ? patchNft(item, event) : item)),
     },
   )
 

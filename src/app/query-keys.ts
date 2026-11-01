@@ -6,6 +6,7 @@ export const PRIVATE_SCOPE = 'private'
 export const queryKeys = {
   session: ['session'],
   cart: [PRIVATE_SCOPE, 'cart'],
+  favorites: [PRIVATE_SCOPE, 'favorites'],
   nfts: ['nfts'],
   nftLists: ['nfts', 'list'],
   /** Holds exactly what is sent to the API: one cache entry per distinct request. */

@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 
 import { Skeleton } from '@/components/ui/skeleton'
 import type { NftSummary } from '@/contracts/nfts'
+import { FavoriteButton } from '@/features/favorites/components/favorite-button'
 import { formatEth } from '@/lib/money/eth'
 
 // Same box for the image in the card and in its skeleton: nothing shifts when data lands.
@@ -22,7 +23,9 @@ export function NftCard({ nft }: { nft: NftSummary }) {
   const { id, image, name, priceEth, compareAtPriceEth, isRare, soldOut } = nft
 
   return (
-    <article>
+    <article className="relative">
+      {/* A sibling of the link: interactive content cannot be nested inside it. */}
+      <FavoriteButton nft={nft} className="absolute top-3 right-3 z-20 size-7 md:size-8.75" />
       <Link to="/nft/$id" params={{ id }} className="flex flex-col gap-2 md:gap-3">
         <div className={ART_FRAME}>
           {soldOut ? <Tag label="ESGOTADO" /> : isRare && <Tag label="RARO" />}
