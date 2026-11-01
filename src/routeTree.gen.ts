@@ -18,6 +18,7 @@ import { Route as PrivateFavoritosRouteImport } from './routes/_private/favorito
 import { Route as PrivatePagamentoRouteImport } from './routes/_private/pagamento'
 import { Route as PrivatePerfilRouteImport } from './routes/_private/perfil'
 import { Route as NftIdRouteImport } from './routes/nft.$id'
+import { Route as PrivatePedidoIdRouteImport } from './routes/_private/pedido.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -63,6 +64,11 @@ const NftIdRoute = NftIdRouteImport.update({
   path: '/nft/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivatePedidoIdRoute = PrivatePedidoIdRouteImport.update({
+  id: '/pedido/$id',
+  path: '/pedido/$id',
+  getParentRoute: () => PrivateRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/pagamento': typeof PrivatePagamentoRoute
   '/perfil': typeof PrivatePerfilRoute
   '/nft/$id': typeof NftIdRoute
+  '/pedido/$id': typeof PrivatePedidoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/pagamento': typeof PrivatePagamentoRoute
   '/perfil': typeof PrivatePerfilRoute
   '/nft/$id': typeof NftIdRoute
+  '/pedido/$id': typeof PrivatePedidoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/_private/pagamento': typeof PrivatePagamentoRoute
   '/_private/perfil': typeof PrivatePerfilRoute
   '/nft/$id': typeof NftIdRoute
+  '/_private/pedido/$id': typeof PrivatePedidoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/pagamento'
     | '/perfil'
     | '/nft/$id'
+    | '/pedido/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/pagamento'
     | '/perfil'
     | '/nft/$id'
+    | '/pedido/$id'
   id:
     | '__root__'
     | '/'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/_private/pagamento'
     | '/_private/perfil'
     | '/nft/$id'
+    | '/_private/pedido/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -204,6 +216,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NftIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_private/pedido/$id': {
+      id: '/_private/pedido/$id'
+      path: '/pedido/$id'
+      fullPath: '/pedido/$id'
+      preLoaderRoute: typeof PrivatePedidoIdRouteImport
+      parentRoute: typeof PrivateRoute
+    }
   }
 }
 
@@ -211,12 +230,14 @@ interface PrivateRouteChildren {
   PrivateFavoritosRoute: typeof PrivateFavoritosRoute
   PrivatePagamentoRoute: typeof PrivatePagamentoRoute
   PrivatePerfilRoute: typeof PrivatePerfilRoute
+  PrivatePedidoIdRoute: typeof PrivatePedidoIdRoute
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateFavoritosRoute: PrivateFavoritosRoute,
   PrivatePagamentoRoute: PrivatePagamentoRoute,
   PrivatePerfilRoute: PrivatePerfilRoute,
+  PrivatePedidoIdRoute: PrivatePedidoIdRoute,
 }
 
 const PrivateRouteWithChildren =
