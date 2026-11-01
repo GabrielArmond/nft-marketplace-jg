@@ -52,6 +52,13 @@ export default defineConfig([
     },
   },
   {
+    // `throw redirect()` is TanStack Router's control flow, not an error.
+    files: ['src/routes/**/*.tsx'],
+    rules: {
+      '@typescript-eslint/only-throw-error': 'off',
+    },
+  },
+  {
     files: ['eslint.config.js'],
     extends: [js.configs.recommended],
     languageOptions: { globals: globals.node },
