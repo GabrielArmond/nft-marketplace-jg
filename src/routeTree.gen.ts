@@ -15,6 +15,7 @@ import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as CarrinhoRouteImport } from './routes/carrinho'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PrivateFavoritosRouteImport } from './routes/_private/favoritos'
+import { Route as PrivatePagamentoRouteImport } from './routes/_private/pagamento'
 import { Route as PrivatePerfilRouteImport } from './routes/_private/perfil'
 import { Route as NftIdRouteImport } from './routes/nft.$id'
 
@@ -47,6 +48,11 @@ const PrivateFavoritosRoute = PrivateFavoritosRouteImport.update({
   path: '/favoritos',
   getParentRoute: () => PrivateRoute,
 } as any)
+const PrivatePagamentoRoute = PrivatePagamentoRouteImport.update({
+  id: '/pagamento',
+  path: '/pagamento',
+  getParentRoute: () => PrivateRoute,
+} as any)
 const PrivatePerfilRoute = PrivatePerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/carrinho': typeof CarrinhoRoute
   '/login': typeof LoginRoute
   '/favoritos': typeof PrivateFavoritosRoute
+  '/pagamento': typeof PrivatePagamentoRoute
   '/perfil': typeof PrivatePerfilRoute
   '/nft/$id': typeof NftIdRoute
 }
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/carrinho': typeof CarrinhoRoute
   '/login': typeof LoginRoute
   '/favoritos': typeof PrivateFavoritosRoute
+  '/pagamento': typeof PrivatePagamentoRoute
   '/perfil': typeof PrivatePerfilRoute
   '/nft/$id': typeof NftIdRoute
 }
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/carrinho': typeof CarrinhoRoute
   '/login': typeof LoginRoute
   '/_private/favoritos': typeof PrivateFavoritosRoute
+  '/_private/pagamento': typeof PrivatePagamentoRoute
   '/_private/perfil': typeof PrivatePerfilRoute
   '/nft/$id': typeof NftIdRoute
 }
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
     | '/carrinho'
     | '/login'
     | '/favoritos'
+    | '/pagamento'
     | '/perfil'
     | '/nft/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
     | '/carrinho'
     | '/login'
     | '/favoritos'
+    | '/pagamento'
     | '/perfil'
     | '/nft/$id'
   id:
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
     | '/carrinho'
     | '/login'
     | '/_private/favoritos'
+    | '/_private/pagamento'
     | '/_private/perfil'
     | '/nft/$id'
   fileRoutesById: FileRoutesById
@@ -171,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateFavoritosRouteImport
       parentRoute: typeof PrivateRoute
     }
+    '/_private/pagamento': {
+      id: '/_private/pagamento'
+      path: '/pagamento'
+      fullPath: '/pagamento'
+      preLoaderRoute: typeof PrivatePagamentoRouteImport
+      parentRoute: typeof PrivateRoute
+    }
     '/_private/perfil': {
       id: '/_private/perfil'
       path: '/perfil'
@@ -190,11 +209,13 @@ declare module '@tanstack/react-router' {
 
 interface PrivateRouteChildren {
   PrivateFavoritosRoute: typeof PrivateFavoritosRoute
+  PrivatePagamentoRoute: typeof PrivatePagamentoRoute
   PrivatePerfilRoute: typeof PrivatePerfilRoute
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
   PrivateFavoritosRoute: PrivateFavoritosRoute,
+  PrivatePagamentoRoute: PrivatePagamentoRoute,
   PrivatePerfilRoute: PrivatePerfilRoute,
 }
 
