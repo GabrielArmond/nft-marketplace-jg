@@ -339,3 +339,130 @@ export const ScanIcon = createIcon(
     />
   </>,
 )
+
+export const UserOutlineIcon = createIcon(
+  '0 0 20 20',
+  <>
+    <path
+      {...OUTLINE}
+      d="M10.0001 9.82977C12.2659 9.82977 14.1026 8.00236 14.1026 5.74814C14.1026 3.49391 12.2659 1.6665 10.0001 1.6665C7.73429 1.6665 5.89751 3.49391 5.89751 5.74814C5.89751 8.00236 7.73429 9.82977 10.0001 9.82977Z"
+    />
+    <path
+      {...OUTLINE}
+      d="M12.1368 11.5305H7.86332C5.38469 11.5305 3.3334 13.5713 3.3334 16.0373C3.3334 16.6326 3.58981 17.1428 4.10264 17.3979C4.87187 17.823 6.58127 18.3332 10.0001 18.3332C13.4189 18.3332 15.1283 17.823 15.8975 17.3979C16.3249 17.1428 16.6667 16.6326 16.6667 16.0373C16.6667 13.4863 14.6155 11.5305 12.1368 11.5305Z"
+    />
+  </>,
+)
+
+export const WalletOutlineIcon = createIcon(
+  '0 0 20 20',
+  <>
+    <path {...OUTLINE} d="M10 18C10 18 4 12.5 4 8.3C4 5 6.69 2.5 10 2.5S16 5 16 8.3C16 12.5 10 18 10 18Z" />
+    <circle {...OUTLINE} cx="10" cy="8" r="2.2" />
+  </>,
+)
+
+export const OfferOutlineIcon = createIcon(
+  '0 0 20 20',
+  <>
+    <path {...OUTLINE} d="M3.5 6.5C3.5 5.4 4.4 4.5 5.5 4.5H14.5C15.6 4.5 16.5 5.4 16.5 6.5V15.5H3.5V6.5Z" />
+    <path {...OUTLINE} d="M7 4.5V3.5C7 2.95 7.45 2.5 8 2.5H12C12.55 2.5 13 2.95 13 3.5V4.5" />
+    <path {...OUTLINE} d="M7.5 10.5L9 12L12.5 8.5" />
+  </>,
+)
+
+export const DownloadOutlineIcon = createIcon(
+  '0 0 20 20',
+  <>
+    <path {...OUTLINE} d="M10 2.5V12" />
+    <path {...OUTLINE} d="M6.5 8.5L10 12L13.5 8.5" />
+    <path {...OUTLINE} d="M4 12.5V16C4 16.83 4.67 17.5 5.5 17.5H14.5C15.33 17.5 16 16.83 16 16V12.5" />
+  </>,
+)
+
+export const SupportOutlineIcon = createIcon(
+  '0 0 20 20',
+  <>
+    <path {...OUTLINE} d="M3 10C3 6.13 6.13 3 10 3S17 6.13 17 10V14.5C17 15.6 16.1 16.5 15 16.5H12.5" />
+    <path {...OUTLINE} d="M3 10H5.5V14H4C3.45 14 3 13.55 3 13V10Z" />
+    <path {...OUTLINE} d="M17 10H14.5V14H16C16.55 14 17 13.55 17 13V10Z" />
+    <circle cx="10" cy="16.5" r=".75" fill="currentColor" />
+  </>,
+)
+
+export const SignOutOutlineIcon = createIcon(
+  '0 0 20 20',
+  <>
+    <path {...OUTLINE} d="M10.5 3H5.5C4.67 3 4 3.67 4 4.5V15.5C4 16.33 4.67 17 5.5 17H10.5" />
+    <path {...OUTLINE} d="M9 10H17" />
+    <path {...OUTLINE} d="M13.5 6.5L17 10L13.5 13.5" />
+  </>,
+)
+
+export const LocationPinOutlineIcon = createIcon(
+  '0 0 20 20',
+  <>
+    <path
+      {...OUTLINE}
+      d="M16 8.3C16 12.5 10 18 10 18S4 12.5 4 8.3C4 5 6.69 2.5 10 2.5S16 5 16 8.3Z"
+    />
+    <circle
+      {...OUTLINE}
+      cx="10"
+      cy="8"
+      r="2.2"
+    />
+  </>,
+)
+
+export const PowerOutlineIcon = createIcon(
+  '0 0 20 20',
+  <>
+    <path
+      {...OUTLINE}
+      d="M10 2.5V10"
+    />
+    <path
+      {...OUTLINE}
+      d="M5.3 5.7C3.8 6.9 3 8.7 3 10.6C3 14.5 6.1 17.5 10 17.5S17 14.5 17 10.6C17 8.7 16.2 6.9 14.7 5.7"
+    />
+  </>,
+)
+
+export const AlertTriangleOutlineIcon = createIcon(
+  '0 0 20 20',
+  <>
+    <path
+      {...OUTLINE}
+      d="M8.3 3.8C9.05 2.4 10.95 2.4 11.7 3.8L17.1 14C17.8 15.3 16.9 16.8 15.4 16.8H4.6C3.1 16.8 2.2 15.3 2.9 14L8.3 3.8Z"
+    />
+    <path
+      {...OUTLINE}
+      d="M10 7V11"
+    />
+    <circle
+      cx="10"
+      cy="13.7"
+      r="0.7"
+      fill="currentColor"
+    />
+  </>,
+)
+
+export const LogoutOutlineIcon = createIcon(
+  '0 0 20 20',
+  <>
+    <path
+      {...OUTLINE}
+      d="M11.5 3H5.8C4.8 3 4 3.8 4 4.8V15.2C4 16.2 4.8 17 5.8 17H11.5"
+    />
+    <path
+      {...OUTLINE}
+      d="M9 10H18"
+    />
+    <path
+      {...OUTLINE}
+      d="M14.5 6.5L18 10L14.5 13.5"
+    />
+  </>,
+)
