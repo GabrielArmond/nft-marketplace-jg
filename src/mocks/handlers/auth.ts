@@ -6,7 +6,7 @@ import { getDb } from '@/mocks/db/store'
 import {
   createPasswordSalt,
   endSession,
-  getSession,
+  getSessionState,
   hashPassword,
   startSession,
   verifyPassword,
@@ -71,7 +71,7 @@ export const authHandlers = [
     return HttpResponse.json(session)
   }),
 
-  route('get', '/auth/session', () => HttpResponse.json(getSession())),
+  route('get', '/auth/session', () => HttpResponse.json(getSessionState())),
 
   route('post', '/auth/logout', () => {
     endSession()

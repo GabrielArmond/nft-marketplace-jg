@@ -32,6 +32,9 @@ export const sessionSchema = z.object({
 })
 export type Session = z.infer<typeof sessionSchema>
 
+export const sessionStateSchema = z.union([sessionSchema, z.object({ user: z.null() })])
+export type SessionState = z.infer<typeof sessionStateSchema>
+
 export const loginInputSchema = z.object({
   email: emailSchema,
   password: z.string('Informe sua senha.').check(z.minLength(1, 'Informe sua senha.')),

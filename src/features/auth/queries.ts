@@ -9,7 +9,7 @@ import { isApiError } from '@/lib/http/api-error'
 
 const SESSION_STALE_TIME_MS = 5 * 60_000
 
-/** `null` is the normal answer for a visitor, not a failure. */
+/** `null` is a visitor. A 401 here means the session ended, which also leaves a visitor. */
 export const sessionQueryOptions = queryOptions({
   queryKey: queryKeys.session,
   staleTime: SESSION_STALE_TIME_MS,

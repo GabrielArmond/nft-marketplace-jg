@@ -1,4 +1,4 @@
-import type { Session, User } from '@/contracts/auth'
+import type { Session, SessionState, User } from '@/contracts/auth'
 import { API_ERROR_CODES } from '@/contracts/common'
 import { getDb } from '@/mocks/db/store'
 import type { SessionRecord, UserRecord } from '@/mocks/db/types'
@@ -108,18 +108,20 @@ export function requireUser(): UserRecord {
   return user
 }
 
-/** Reading a lapsed session ends it: the visitor must be able to keep using a guest cart. */
-export function getSession(): Session {
+/**
+ * No cookie is a visitor, answered with 200. A cookie without a live session is a
+ * session that ended: it is cleared, so the visitor can keep using a guest cart,
+ * and reported as 401 this one time.
+ */
+export function getSessionState(): SessionState {
+  if (!hasSessionCookie()) return { user: null }
+
   const record = findActiveRecord()
   const user = getDb().users.find(({ id }) => id === record?.userId)
 
   if (!record || !user) {
-    const hadCookie = hasSessionCookie()
     endSession()
-    if (hadCookie) {
-      throw new MockHttpError(401, API_ERROR_CODES.sessionExpired, 'Sua sessão expirou.')
-    }
-    throw new MockHttpError(401, API_ERROR_CODES.sessionInvalid, 'Entre para continuar.')
+    throw new MockHttpError(401, API_ERROR_CODES.sessionExpired, 'Sua sessão expirou.')
   }
   return toSession(user, record)
 }
