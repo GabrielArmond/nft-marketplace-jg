@@ -3,6 +3,7 @@ import { Link } from '@tanstack/react-router'
 import { StatusScreen } from '@/components/feedback/status-screen'
 import { Button } from '@/components/ui/button'
 import { NftCard, NftCardSkeleton } from '@/features/catalog/components/nft-card'
+import { AccountLayout } from '@/features/account/components/account-layout'
 import { useFavorites } from '@/features/favorites/hooks'
 import { normalizeApiError } from '@/lib/http/api-error'
 
@@ -14,51 +15,57 @@ export function FavoritesPage() {
 
   if (error && !data) {
     return (
-      <StatusScreen
-        eyebrow="Erro"
-        title="Não foi possível carregar os favoritos"
-        description={normalizeApiError(error).message}
-      >
-        <Button
-          size="lg"
-          disabled={isFetching}
-          onClick={() => {
-            void refetch()
-          }}
+      <AccountLayout>
+        <StatusScreen
+          eyebrow="Erro"
+          title="Não foi possível carregar os favoritos"
+          description={normalizeApiError(error).message}
         >
-          {isFetching ? 'Tentando...' : 'Tentar novamente'}
-        </Button>
-      </StatusScreen>
+          <Button
+            size="lg"
+            disabled={isFetching}
+            onClick={() => {
+              void refetch()
+            }}
+          >
+            {isFetching ? 'Tentando...' : 'Tentar novamente'}
+          </Button>
+        </StatusScreen>
+      </AccountLayout>
     )
   }
 
   if (data?.items.length === 0) {
     return (
-      <StatusScreen
-        eyebrow="Lista de interesse"
-        title="Nenhum favorito ainda"
-        description="Toque no coração de um NFT para guardá-lo aqui."
-      >
-        <Button asChild size="lg">
-          <Link to="/" hash="catalogo">
-            Explorar o catálogo
-          </Link>
-        </Button>
-      </StatusScreen>
+      <AccountLayout>
+        <StatusScreen
+          eyebrow="Lista de interesse"
+          title="Nenhum favorito ainda"
+          description="Toque no coração de um NFT para guardá-lo aqui."
+        >
+          <Button asChild size="lg">
+            <Link to="/" hash="catalogo">
+              Explorar o catálogo
+            </Link>
+          </Button>
+        </StatusScreen>
+      </AccountLayout>
     )
   }
 
   return (
-    <div className="page-container py-10 md:py-12">
-      <h1 className="mb-8 text-2xl font-bold md:text-3xl">Lista de interesse</h1>
-      <p role="status" className="sr-only">
-        {isPending ? 'Carregando favoritos.' : `${data.items.length.toString()} favoritos.`}
-      </p>
-      <div aria-busy={isPending} className={GRID}>
-        {data
-          ? data.items.map((nft) => <NftCard key={nft.id} nft={nft} />)
-          : SKELETON_CARDS.map((card) => <NftCardSkeleton key={card} />)}
+    <AccountLayout>
+      <div>
+        <h1 className="mb-8 text-2xl font-bold md:text-3xl">Lista de interesse</h1>
+        <p role="status" className="sr-only">
+          {isPending ? 'Carregando favoritos.' : `${data.items.length.toString()} favoritos.`}
+        </p>
+        <div aria-busy={isPending} className={GRID}>
+          {data
+            ? data.items.map((nft) => <NftCard key={nft.id} nft={nft} />)
+            : SKELETON_CARDS.map((card) => <NftCardSkeleton key={card} />)}
+        </div>
       </div>
-    </div>
+    </AccountLayout>
   )
 }
