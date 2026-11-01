@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { LoginInput, RegisterInput } from '@/contracts/auth'
 import { login, logout, register } from '@/features/auth/api'
 import { replaceSession, sessionQueryOptions } from '@/features/auth/queries'
+import { clearCheckoutStorage } from '@/features/checkout/storage-keys'
 
 export function useSession() {
   return useQuery(sessionQueryOptions)
@@ -31,6 +32,9 @@ export function useLogout() {
 
   return useMutation({
     mutationFn: logout,
-    onSuccess: () => replaceSession(queryClient, null),
+    onSuccess: () => {
+      clearCheckoutStorage()
+      return replaceSession(queryClient, null)
+    },
   })
 }

@@ -7,6 +7,7 @@ import { dropExpiredSession, readCachedSession } from '@/features/auth/queries'
 import { authModalTarget } from '@/features/auth/redirect'
 import { onSessionExpired } from '@/features/auth/session-expiry'
 import { startNftRealtimeSync } from '@/features/catalog/nft-realtime-sync'
+import { startOrderRealtimeSync } from '@/features/checkout/order-realtime-sync'
 import { disconnectRealtime, restartRealtime } from '@/lib/realtime/socket-client'
 
 /** App-wide reactions to the session. Renders nothing. */
@@ -37,6 +38,7 @@ export function SessionLifecycle() {
   )
 
   useEffect(() => startNftRealtimeSync(queryClient), [queryClient])
+  useEffect(() => startOrderRealtimeSync(queryClient), [queryClient])
 
   // The server binds the socket to the session at handshake: a new user needs a new one.
   useEffect(() => {
