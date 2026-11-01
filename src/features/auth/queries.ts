@@ -7,7 +7,7 @@ import { getSession } from '@/features/auth/api'
 import { reportSessionExpired } from '@/features/auth/session-expiry'
 import { isApiError } from '@/lib/http/api-error'
 
-const SESSION_STALE_TIME_MS = 5 * 60_000
+const SESSION_STALE_TIME_MS = 10 * 60_000
 
 /** `null` is a visitor. A 401 here means the session ended, which also leaves a visitor. */
 export const sessionQueryOptions = queryOptions({
