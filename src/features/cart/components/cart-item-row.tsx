@@ -94,7 +94,7 @@ export function CartItemRow({ item }: { item: CartItem }) {
         type="button"
         aria-label={`Remover ${item.name}`}
         disabled={busy}
-        className="absolute top-1 right-1 flex size-8 items-center justify-center text-primary disabled:opacity-50 md:static md:size-6 md:text-content-subtle"
+        className="absolute top-1 right-1 flex size-8 items-center justify-center text-primary disabled:opacity-50 md:static md:size-6 md:text-content-subtle cursor-pointer hover:text-destructive duration-300 ease-in-out"
         onClick={onRemove}
       >
         <DeleteIcon className="size-6" />
