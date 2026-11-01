@@ -1,21 +1,40 @@
-import { Link, useRouter } from '@tanstack/react-router'
 import { Dialog } from 'radix-ui'
-import { useState, type ReactNode } from 'react'
+import { useRef, useState, type ReactNode } from 'react'
 
 import { CloseIcon, FacebookLogoIcon, GoogleIcon } from '@/components/icons/icons'
-import type { AuthSearch } from '@/features/auth/redirect'
+import { LoginForm } from '@/features/auth/components/login-form'
+import { RegisterForm } from '@/features/auth/components/register-form'
+import type { AuthMode } from '@/features/auth/redirect'
 import { cn } from '@/lib/utils'
 
 const UNAVAILABLE_MESSAGE = 'Entrada social indisponível. Use e-mail e senha.'
 
+const COPY: Record<
+  AuthMode,
+  { title: string; description: string; mobileTitle: string; prompt: string; action: string }
+> = {
+  login: {
+    title: 'Entrar',
+    description: 'Entre para gerenciar sua carteira, coleção e perfil de criador.',
+    mobileTitle: 'Entrar',
+    prompt: 'Novo na Kurio?',
+    action: 'Crie uma conta',
+  },
+  register: {
+    title: 'Criar conta',
+    description: 'Crie seu perfil de colecionador e comece a montar sua coleção.',
+    mobileTitle: 'Criar perfil de colecionador',
+    prompt: 'Já tem uma conta?',
+    action: 'Entre',
+  },
+}
+
 interface AuthDialogProps {
-  mode: 'login' | 'register'
-  search: AuthSearch
-  description: string
-  mobileTitle: string
-  switchPrompt: string
-  switchLabel: string
-  children: ReactNode
+  mode: AuthMode
+  expired: boolean
+  onClose: () => void
+  onDone: () => void
+  onSwitch: (mode: AuthMode) => void
 }
 
 function SocialButton({
@@ -39,26 +58,11 @@ function SocialButton({
   )
 }
 
-/**
- * Figma draws both flows as a modal over the marketplace on desktop and as a
- * full page on mobile. One dialog covers both: focus stays trapped either way.
- */
-export function AuthDialog({
-  mode,
-  search,
-  description,
-  mobileTitle,
-  switchPrompt,
-  switchLabel,
-  children,
-}: AuthDialogProps) {
-  const router = useRouter()
+export function AuthDialog({ mode, expired, onClose, onDone, onSwitch }: AuthDialogProps) {
   const [notice, setNotice] = useState<string | null>(null)
+  const openedFrom = useRef<HTMLElement | null>(null)
   const isLogin = mode === 'login'
-
-  function close() {
-    router.history.push(search.redirect ?? '/')
-  }
+  const { title, description, mobileTitle, prompt, action } = COPY[mode]
 
   function showUnavailable() {
     setNotice(UNAVAILABLE_MESSAGE)
@@ -68,7 +72,7 @@ export function AuthDialog({
     <Dialog.Root
       open
       onOpenChange={(open) => {
-        if (!open) close()
+        if (!open) onClose()
       }}
     >
       <Dialog.Portal>
@@ -77,11 +81,19 @@ export function AuthDialog({
           aria-describedby={undefined}
           onOpenAutoFocus={(event) => {
             // Start where the user will type, not on the close button.
+            const { activeElement } = document
+            openedFrom.current = activeElement instanceof HTMLElement ? activeElement : null
+
             const dialog = event.currentTarget
             if (dialog instanceof HTMLElement) {
               event.preventDefault()
               dialog.querySelector('input')?.focus()
             }
+          }}
+          onCloseAutoFocus={(event) => {
+            // No Dialog.Trigger here: the trigger lives anywhere on the page.
+            event.preventDefault()
+            openedFrom.current?.focus()
           }}
         >
           <Dialog.Close
@@ -91,7 +103,7 @@ export function AuthDialog({
             <CloseIcon className="size-4.5" />
           </Dialog.Close>
 
-          <Dialog.Title className="sr-only">{isLogin ? 'Entrar' : 'Criar conta'}</Dialog.Title>
+          <Dialog.Title className="sr-only">{title}</Dialog.Title>
 
           <p
             aria-hidden="true"
@@ -109,36 +121,48 @@ export function AuthDialog({
             {mobileTitle}
           </p>
 
-          <nav aria-label="Acesso à conta" className="hidden flex-col gap-10 px-12 md:flex">
-            <div className="flex items-center justify-center gap-2 text-xl leading-4 font-medium">
-              <Link
-                to="/login"
-                search={search}
+          <div className="hidden flex-col gap-10 px-12 md:flex">
+            <div
+              role="tablist"
+              aria-label="Acesso à conta"
+              className="flex items-center justify-center gap-2 text-xl leading-4 font-medium"
+            >
+              <button
+                type="button"
+                role="tab"
+                aria-selected={isLogin}
                 className={isLogin ? 'text-content-accent' : undefined}
-                aria-current={isLogin ? 'page' : undefined}
+                onClick={() => {
+                  onSwitch('login')
+                }}
               >
                 Entrar
-              </Link>
+              </button>
               <span aria-hidden="true" className="h-5 w-px bg-content-coral" />
-              <Link
-                to="/cadastro"
-                search={search}
+              <button
+                type="button"
+                role="tab"
+                aria-selected={!isLogin}
                 className={isLogin ? undefined : 'text-content-accent'}
-                aria-current={isLogin ? undefined : 'page'}
+                onClick={() => {
+                  onSwitch('register')
+                }}
               >
                 Criar conta
-              </Link>
+              </button>
             </div>
             <p className="text-center text-caption leading-4">{description}</p>
-          </nav>
+          </div>
 
-          {search.reason === 'expired' && (
+          {expired && (
             <p role="alert" className="mt-4 text-center text-sm text-destructive md:px-20">
               Sua sessão expirou. Entre novamente para continuar de onde parou.
             </p>
           )}
 
-          <div className="mt-10 md:mt-6 md:px-20">{children}</div>
+          <div className="mt-10 md:mt-6 md:px-20">
+            {isLogin ? <LoginForm onDone={onDone} /> : <RegisterForm onDone={onDone} />}
+          </div>
 
           <div className="mt-10 flex flex-col gap-3 md:mt-6">
             <div className="flex items-center gap-3">
@@ -166,14 +190,16 @@ export function AuthDialog({
           </div>
 
           <p className="mt-10 text-center text-md text-content-secondary md:hidden">
-            {switchPrompt}{' '}
-            <Link
-              to={isLogin ? '/cadastro' : '/login'}
-              search={search}
+            {prompt}{' '}
+            <button
+              type="button"
               className="text-content-accent"
+              onClick={() => {
+                onSwitch(isLogin ? 'register' : 'login')
+              }}
             >
-              {switchLabel}
-            </Link>
+              {action}
+            </button>
           </p>
         </Dialog.Content>
       </Dialog.Portal>

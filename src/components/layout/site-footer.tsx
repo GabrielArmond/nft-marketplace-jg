@@ -8,6 +8,7 @@ import {
   TwitterIcon,
   YoutubeIcon,
 } from '@/components/icons/icons'
+import { ProtectedLink } from '@/components/layout/protected-link'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
@@ -134,10 +135,10 @@ export function SiteFooter({ className }: { className?: string | undefined }) {
           <h2 className="text-lg leading-4 font-bold">Meu perfil</h2>
           <ul className="flex flex-col text-sm leading-7.5">
             <li>
-              <Link to="/perfil">Meu perfil</Link>
+              <ProtectedLink to="/perfil">Meu perfil</ProtectedLink>
             </li>
             <li>
-              <Link to="/favoritos">Lista de interesse</Link>
+              <ProtectedLink to="/favoritos">Lista de interesse</ProtectedLink>
             </li>
             <li>
               <Link to="/carrinho">Carrinho</Link>

@@ -5,6 +5,7 @@ import { HeaderSearch } from '@/components/layout/header-search'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useSession } from '@/features/auth/hooks'
+import { authModalTarget } from '@/features/auth/redirect'
 import { useCartCount } from '@/features/cart/hooks'
 import { cn } from '@/lib/utils'
 
@@ -14,7 +15,6 @@ const MARKET_PATHS = ['/nft/', '/carrinho']
 
 function AccountAction() {
   const { data: session, isPending } = useSession()
-  const href = useRouterState({ select: ({ location }) => location.href })
 
   if (isPending) return <Skeleton className="h-8.75 w-25" />
 
@@ -31,7 +31,7 @@ function AccountAction() {
 
   return (
     <Button asChild size="sm" className="h-8.75 w-25 gap-1 px-0 font-medium">
-      <Link to="/login" search={{ redirect: href }}>
+      <Link {...authModalTarget('login')}>
         <LoginIcon />
         Entrar
       </Link>

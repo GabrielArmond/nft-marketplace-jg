@@ -4,6 +4,7 @@ import { useRouter } from '@tanstack/react-router'
 import { queryKeys } from '@/app/query-keys'
 import type { Favorites, NftSummary } from '@/contracts/nfts'
 import { useSession } from '@/features/auth/hooks'
+import { authModalTarget } from '@/features/auth/redirect'
 import { addFavorite, removeFavorite } from '@/features/favorites/api'
 import { favoritesQueryOptions } from '@/features/favorites/queries'
 import { isApiError } from '@/lib/http/api-error'
@@ -73,10 +74,7 @@ export function useFavoriteToggle(nft: NftSummary) {
       mutate(!isFavorite)
       return
     }
-    void router.navigate({
-      to: '/login',
-      search: { redirect: router.state.location.href },
-    })
+    void router.navigate(authModalTarget('login'))
   }
 
   return { isFavorite, isPending, toggle }

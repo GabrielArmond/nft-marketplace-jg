@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import type { ComponentProps, ComponentType } from 'react'
 
 import { HeartIcon, HomeIcon, ScanIcon, ShopIcon, UserIcon } from '@/components/icons/icons'
+import { ProtectedLink } from '@/components/layout/protected-link'
 import { useCartCount } from '@/features/cart/hooks'
 
 const TAB = 'flex size-11 items-center justify-center'
@@ -46,9 +47,15 @@ export function TabBar() {
         >
           <TabIcon icon={HomeIcon} />
         </Link>
-        <Link to="/favoritos" aria-label="Favoritos" className={TAB} {...TAB_STATES}>
+        <ProtectedLink
+          to="/favoritos"
+          aria-label="Favoritos"
+          className={TAB}
+          activeClassName={TAB_STATES.activeProps.className}
+          inactiveClassName={TAB_STATES.inactiveProps.className}
+        >
           <TabIcon icon={HeartIcon} />
-        </Link>
+        </ProtectedLink>
 
         <Link
           to="/"
@@ -74,9 +81,15 @@ export function TabBar() {
             </span>
           )}
         </Link>
-        <Link to="/perfil" aria-label="Perfil" className={TAB} {...TAB_STATES}>
+        <ProtectedLink
+          to="/perfil"
+          aria-label="Perfil"
+          className={TAB}
+          activeClassName={TAB_STATES.activeProps.className}
+          inactiveClassName={TAB_STATES.inactiveProps.className}
+        >
           <TabIcon icon={UserIcon} />
-        </Link>
+        </ProtectedLink>
       </div>
     </nav>
   )

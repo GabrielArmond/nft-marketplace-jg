@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 
 import { useSession } from '@/features/auth/hooks'
 import { dropExpiredSession, readCachedSession } from '@/features/auth/queries'
+import { authModalTarget } from '@/features/auth/redirect'
 import { onSessionExpired } from '@/features/auth/session-expiry'
 import { startNftRealtimeSync } from '@/features/catalog/nft-realtime-sync'
 import { disconnectRealtime, restartRealtime } from '@/lib/realtime/socket-client'
@@ -21,9 +22,16 @@ export function SessionLifecycle() {
         // Visitors also get 401s; only an active session has context worth preserving.
         if (!readCachedSession(queryClient)) return
 
-        const { href } = router.state.location
+        const { location, matches } = router.state
+        const onPrivateRoute = matches.some(({ routeId }) => routeId.startsWith('/_private'))
+
         void dropExpiredSession(queryClient)
-        void router.navigate({ to: '/login', search: { redirect: href, reason: 'expired' } })
+        // A private page cannot stay on screen; anything else stays under the dialog.
+        void router.navigate(
+          onPrivateRoute
+            ? { to: '/login', search: { redirect: location.href, reason: 'expired' } }
+            : authModalTarget('login', undefined, 'expired'),
+        )
       }),
     [queryClient, router],
   )

@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 
+import { ProtectedLink } from '@/components/layout/protected-link'
 import { Button } from '@/components/ui/button'
 import type { Cart } from '@/contracts/cart'
 import { CouponForm } from '@/features/cart/components/coupon-form'
@@ -46,7 +47,7 @@ export function CartSummary({ cart }: { cart: Cart }) {
 
       <dl className="flex flex-col gap-3">
         <Row label="Subtotal">{formatEth(summary.subtotalEth)} ETH</Row>
-        <Row small label="Desconto do lançamento">
+        <Row small label="Desconto do Cupom">
           (-) {formatEth(summary.discountEth)} ETH
         </Row>
         <div>
@@ -73,7 +74,7 @@ export function CartSummary({ cart }: { cart: Cart }) {
             size="cta"
             className="w-full md:h-10 md:rounded-xs md:bg-primary md:bg-none"
           >
-            <Link to="/pagamento">Conectar e finalizar</Link>
+            <ProtectedLink to="/pagamento">Conectar e finalizar</ProtectedLink>
           </Button>
         )}
         <Link to="/" hash="catalogo" className="text-md text-content-accent">

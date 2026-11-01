@@ -15,6 +15,13 @@ export const router = createRouter({
   scrollRestoration: true,
 })
 
+declare module '@tanstack/history' {
+  interface HistoryState {
+    /** Set on the entry created by opening the login dialog. */
+    authModal?: boolean
+  }
+}
+
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router
