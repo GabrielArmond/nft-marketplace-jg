@@ -1,6 +1,7 @@
-import { QueryClient } from '@tanstack/react-query'
+import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query'
 
-import { normalizeApiError } from '@/lib/http/api-error'
+import { reportSessionExpired } from '@/features/auth/session-expiry'
+import { isApiError, normalizeApiError } from '@/lib/http/api-error'
 
 const STALE_TIME_MS = 30_000
 const GC_TIME_MS = 5 * 60_000
@@ -14,6 +15,11 @@ const MAX_RETRY_DELAY_MS = 8_000
  */
 function shouldRetryQuery(failureCount: number, error: unknown): boolean {
   return failureCount < MAX_QUERY_RETRIES && normalizeApiError(error).isRetryable
+}
+
+/** A single place sees every 401, so no screen has to handle session loss on its own. */
+function handleGlobalError(error: unknown): void {
+  if (isApiError(error, 'unauthorized')) reportSessionExpired()
 }
 
 /**
@@ -31,6 +37,8 @@ function shouldRetryQuery(failureCount: number, error: unknown): boolean {
  *   duplicate it. Retries there must be explicit and use an idempotency key.
  */
 export const queryClient = new QueryClient({
+  queryCache: new QueryCache({ onError: handleGlobalError }),
+  mutationCache: new MutationCache({ onError: handleGlobalError }),
   defaultOptions: {
     queries: {
       staleTime: STALE_TIME_MS,
