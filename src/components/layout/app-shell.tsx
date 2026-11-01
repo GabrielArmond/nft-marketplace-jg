@@ -13,10 +13,14 @@ const AuthModal = lazy(() => import('@/features/auth/components/auth-modal'))
 const AUTH_PATHS = ['/login', '/cadastro']
 
 export function AppShell() {
-  // The mobile NFT and cart screens end in their own purchase area, without the tab bar.
+  // The mobile purchase screens end in their own action area, without the tab bar.
   const pathname = useRouterState({ select: ({ location }) => location.pathname })
   const hasBuyBar = pathname.startsWith('/nft/')
-  const hideTabBar = hasBuyBar || pathname === '/carrinho'
+  const hideTabBar =
+    hasBuyBar ||
+    pathname === '/carrinho' ||
+    pathname === '/pagamento' ||
+    pathname.startsWith('/pedido/')
   const { auth } = useSearch({ strict: false })
 
   return (
