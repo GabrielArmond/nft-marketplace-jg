@@ -41,7 +41,7 @@ function HeroDots({ active, onSelect, className }: HeroDotsProps) {
           type="button"
           aria-label={`Destaque ${(index + 1).toString()} de ${SLIDES.length.toString()}`}
           aria-pressed={index === active}
-          className="flex size-6 items-center justify-center"
+          className="flex size-4 items-center justify-center"
           onClick={() => {
             onSelect(index)
           }}
@@ -68,7 +68,7 @@ export function HomeHero() {
       {/* Mobile banner */}
       <section
         aria-label="Destaques"
-        className="relative overflow-hidden rounded-[1.875rem] bg-linear-134 from-primary/20 to-primary/10 p-4 md:hidden"
+        className="relative overflow-hidden rounded-[1.875rem] bg-linear-134 from-primary/20 to-primary/10 py-4 pr-2 pl-4 md:hidden"
       >
         <span
           aria-hidden="true"
@@ -78,10 +78,10 @@ export function HomeHero() {
           aria-hidden="true"
           className="absolute -top-2.5 left-18 size-62 rounded-full bg-linear-160 from-primary-light/37 to-transparent"
         />
-        <div className="relative flex gap-2">
+        <div className="relative flex items-center gap-2">
           <div className="flex min-w-0 flex-1 flex-col">
             <p className="text-xs font-medium">Bem-vindo à Kurio</p>
-            <h1 className="mt-1.5 text-lg leading-7.25 font-bold">
+            <h1 className="mt-1.5 text-lg leading-7.25 font-bold whitespace-nowrap">
               SEJA DONO DA
               <br />
               CULTURA DIGITAL
@@ -102,26 +102,19 @@ export function HomeHero() {
             to="/nft/$id"
             params={{ id: slide.nftId }}
             aria-label={`Ver ${slide.name}`}
-            className="relative h-32 w-30 shrink-0 min-[25rem]:h-36.5 min-[25rem]:w-34.5"
+            className="shrink-0"
           >
             <img
               src={slide.url}
               alt={slide.alt}
-              width={138}
-              height={138}
+              width={160}
+              height={160}
               fetchPriority="high"
-              className="size-30 rounded-2xl min-[25rem]:size-34.5"
-            />
-            <img
-              src="/nft/nomad-320.webp"
-              alt=""
-              width={58}
-              height={58}
-              className="absolute bottom-0 left-3.5 size-14.5 rounded-2xl"
+              className="size-29 rounded-2xl min-[23rem]:size-33 min-[25rem]:size-40"
             />
           </Link>
         </div>
-        <HeroDots active={active} onSelect={setActive} className="relative justify-center" />
+        <HeroDots active={active} onSelect={setActive} className="relative justify-center top-3" />
       </section>
 
       {/* Desktop and tablet */}
