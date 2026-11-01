@@ -87,7 +87,7 @@ export function Receipt({ receipt }: { receipt: ReceiptData }) {
         <div className="flex flex-col items-center gap-3">
           <Button asChild size="lg">
             <a href={explorerUrl} target="_blank" rel="noreferrer">
-              Ver no explorador (simulado)
+              Ver no explorador
             </a>
           </Button>
           <Button asChild variant="outline" size="lg">

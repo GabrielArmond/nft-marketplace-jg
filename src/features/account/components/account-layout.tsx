@@ -37,7 +37,7 @@ export function AccountLayout({ children }: { children: ReactNode }) {
           <ul className="flex gap-1 overflow-x-auto pb-1 xl:flex-col xl:overflow-visible">
             {AVAILABLE.map((item) => (
               <li key={item.label}>
-                <Link to={item.to} className={`${ITEM} w-full text-left flex items-center gap-3`} {...LINK_STATES}>
+                <Link to={item.to} className={`${ITEM} w-full text-left flex items-center gap-3 hover:text-primary duration-300 ease-in-out`} {...LINK_STATES}>
                   {item.icon}
                   {item.label}
                 </Link>
@@ -47,7 +47,7 @@ export function AccountLayout({ children }: { children: ReactNode }) {
               <li key={item.label}>
                 <button
                   type="button"
-                  className={`${ITEM} w-full border border-transparent text-left flex items-center gap-3`}
+                  className={`${ITEM} w-full border border-transparent text-left flex items-center gap-3 cursor-pointer hover:text-primary duration-300 ease-in-out`}
                   onClick={() => {
                     setNotice(`${item.label} não está disponível.`)
                   }}
@@ -60,7 +60,7 @@ export function AccountLayout({ children }: { children: ReactNode }) {
             <li className="border-t border-primary">
               <button
                 type="button"
-                className={`${ITEM} w-full border border-transparent text-left flex items-center gap-2`}
+                className={`${ITEM} w-full border border-transparent text-left flex items-center gap-2 cursor-pointer hover:text-primary duration-300 ease-in-out`}
                 onClick={() => {
                   logout.mutate(undefined, {
                     onSuccess: () => {

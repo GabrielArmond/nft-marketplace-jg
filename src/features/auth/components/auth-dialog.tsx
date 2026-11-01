@@ -49,7 +49,7 @@ function SocialButton({
   return (
     <button
       type="button"
-      className="flex h-10 w-full items-center justify-center gap-3 rounded-control border border-border text-caption font-medium text-content-secondary"
+      className="flex h-10 w-full items-center justify-center gap-3 rounded-control border border-border text-caption font-medium text-content-secondary cursor-pointer hover:border-primary duration-150 ease-in-out"
       onClick={onClick}
     >
       {icon}
@@ -99,7 +99,7 @@ export function AuthDialog({ mode, expired, onClose, onDone, onSwitch }: AuthDia
         >
           <Dialog.Close
             aria-label="Fechar"
-            className="absolute top-5 right-5 flex size-8 items-center justify-center text-primary md:top-2 md:right-2"
+            className="absolute top-5 right-5 flex size-8 items-center justify-center text-primary md:top-2 md:right-2 cursor-pointer hover:text-primary/80 duration-300 ease-in-out"
           >
             <CloseIcon className="size-4.5" />
           </Dialog.Close>
@@ -132,7 +132,7 @@ export function AuthDialog({ mode, expired, onClose, onDone, onSwitch }: AuthDia
                 type="button"
                 role="tab"
                 aria-selected={isLogin}
-                className={isLogin ? 'text-content-accent' : undefined}
+                className={isLogin ? 'text-content-accent' : 'cursor-pointer hover:text-primary'}
                 onClick={() => {
                   onSwitch('login')
                 }}
@@ -144,7 +144,7 @@ export function AuthDialog({ mode, expired, onClose, onDone, onSwitch }: AuthDia
                 type="button"
                 role="tab"
                 aria-selected={!isLogin}
-                className={isLogin ? undefined : 'text-content-accent'}
+                className={isLogin ? 'cursor-pointer hover:text-primary' : 'text-content-accent'}
                 onClick={() => {
                   onSwitch('register')
                 }}

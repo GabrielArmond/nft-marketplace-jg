@@ -17,7 +17,7 @@ export function PasswordField(props: ComponentProps<typeof TextField>) {
           aria-label={visible ? 'Ocultar senha' : 'Mostrar senha'}
           aria-pressed={visible}
           className={cn(
-            'flex size-8 items-center justify-center rounded-sm',
+            'flex size-8 items-center justify-center rounded-sm cursor-pointer',
             visible ? 'text-content-accent' : 'text-content-subtle',
           )}
           onClick={() => {

@@ -49,7 +49,7 @@ export function LoginForm({ onDone }: { onDone: () => void }) {
       />
       <button
         type="button"
-        className="self-end text-sm leading-4 text-content-accent"
+        className="self-end text-sm leading-4 text-content-accent cursor-pointer hover:text-primary duration-150 ease-in-out"
         onClick={() => {
           setForgotNotice(true)
         }}
