@@ -95,9 +95,9 @@ export function HomePage({ search = EMPTY_CATALOG_SEARCH }: { search?: CatalogSe
         </aside>
 
         <div>
-          <div className="mb-4 flex items-center justify-between gap-4 md:mb-8">
-            <nav aria-label="Listas" className="min-w-0 overflow-x-auto">
-              <ul className="flex gap-4 md:gap-5">
+          <div className="mb-4 flex items-center justify-between gap-4 md:mb-6">
+            <nav aria-label="Listas" className="flex items-center w-full">
+              <ul className="flex items-center justify-between gap-3 md:gap-5 md:justify-start w-full">
                 {NFT_TABS.map((tab) => {
                   const current = (search.tab ?? 'all') === tab
                   return (
