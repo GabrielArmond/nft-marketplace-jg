@@ -6,6 +6,7 @@
 const WEI_DECIMALS = 18
 const WEI_PER_ETH = 10n ** BigInt(WEI_DECIMALS)
 const BASIS_POINTS = 10_000n
+const WEI_PER_CENT = 10n ** 16n
 
 export const ETH_AMOUNT_PATTERN = /^\d+(\.\d{1,18})?$/
 
@@ -51,6 +52,21 @@ export function applyBasisPoints(amount: string, basisPoints: number): string {
     throw new RangeError(`Invalid basis points: ${basisPoints.toString()}.`)
   }
   return fromWei((toWei(amount) * BigInt(basisPoints)) / BASIS_POINTS)
+}
+
+/** Hundredths of ETH, for controls with a discrete step such as the price slider. */
+export function ethToCents(amount: string): number {
+  return Number(toWei(amount) / WEI_PER_CENT)
+}
+
+export function centsToEth(cents: number): string {
+  return fromWei(BigInt(cents) * WEI_PER_CENT)
+}
+
+/** Display form: at least two decimals, keeping any further precision ("12.30", "26.846"). */
+export function formatEth(amount: string): string {
+  const [whole = '0', fraction = ''] = amount.split('.')
+  return `${whole}.${fraction.padEnd(2, '0')}`
 }
 
 export function compareEth(left: string, right: string): -1 | 0 | 1 {
