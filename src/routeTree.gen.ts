@@ -14,6 +14,7 @@ import { Route as PrivateRouteImport } from './routes/_private'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as CarrinhoRouteImport } from './routes/carrinho'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as PrivateCarteirasRouteImport } from './routes/_private/carteiras'
 import { Route as PrivateFavoritosRouteImport } from './routes/_private/favoritos'
 import { Route as PrivatePagamentoRouteImport } from './routes/_private/pagamento'
 import { Route as PrivatePerfilRouteImport } from './routes/_private/perfil'
@@ -43,6 +44,11 @@ const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PrivateCarteirasRoute = PrivateCarteirasRouteImport.update({
+  id: '/carteiras',
+  path: '/carteiras',
+  getParentRoute: () => PrivateRoute,
 } as any)
 const PrivateFavoritosRoute = PrivateFavoritosRouteImport.update({
   id: '/favoritos',
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/cadastro': typeof CadastroRoute
   '/carrinho': typeof CarrinhoRoute
   '/login': typeof LoginRoute
+  '/carteiras': typeof PrivateCarteirasRoute
   '/favoritos': typeof PrivateFavoritosRoute
   '/pagamento': typeof PrivatePagamentoRoute
   '/perfil': typeof PrivatePerfilRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByTo {
   '/cadastro': typeof CadastroRoute
   '/carrinho': typeof CarrinhoRoute
   '/login': typeof LoginRoute
+  '/carteiras': typeof PrivateCarteirasRoute
   '/favoritos': typeof PrivateFavoritosRoute
   '/pagamento': typeof PrivatePagamentoRoute
   '/perfil': typeof PrivatePerfilRoute
@@ -99,6 +107,7 @@ export interface FileRoutesById {
   '/cadastro': typeof CadastroRoute
   '/carrinho': typeof CarrinhoRoute
   '/login': typeof LoginRoute
+  '/_private/carteiras': typeof PrivateCarteirasRoute
   '/_private/favoritos': typeof PrivateFavoritosRoute
   '/_private/pagamento': typeof PrivatePagamentoRoute
   '/_private/perfil': typeof PrivatePerfilRoute
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/carrinho'
     | '/login'
+    | '/carteiras'
     | '/favoritos'
     | '/pagamento'
     | '/perfil'
@@ -123,6 +133,7 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/carrinho'
     | '/login'
+    | '/carteiras'
     | '/favoritos'
     | '/pagamento'
     | '/perfil'
@@ -135,6 +146,7 @@ export interface FileRouteTypes {
     | '/cadastro'
     | '/carrinho'
     | '/login'
+    | '/_private/carteiras'
     | '/_private/favoritos'
     | '/_private/pagamento'
     | '/_private/perfil'
@@ -188,6 +200,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_private/carteiras': {
+      id: '/_private/carteiras'
+      path: '/carteiras'
+      fullPath: '/carteiras'
+      preLoaderRoute: typeof PrivateCarteirasRouteImport
+      parentRoute: typeof PrivateRoute
+    }
     '/_private/favoritos': {
       id: '/_private/favoritos'
       path: '/favoritos'
@@ -227,6 +246,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface PrivateRouteChildren {
+  PrivateCarteirasRoute: typeof PrivateCarteirasRoute
   PrivateFavoritosRoute: typeof PrivateFavoritosRoute
   PrivatePagamentoRoute: typeof PrivatePagamentoRoute
   PrivatePerfilRoute: typeof PrivatePerfilRoute
@@ -234,6 +254,7 @@ interface PrivateRouteChildren {
 }
 
 const PrivateRouteChildren: PrivateRouteChildren = {
+  PrivateCarteirasRoute: PrivateCarteirasRoute,
   PrivateFavoritosRoute: PrivateFavoritosRoute,
   PrivatePagamentoRoute: PrivatePagamentoRoute,
   PrivatePerfilRoute: PrivatePerfilRoute,
