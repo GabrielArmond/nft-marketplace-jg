@@ -1,9 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { UnderConstruction } from '@/components/feedback/under-construction'
+import { CartPage } from '@/features/cart/pages/cart-page'
 
 export const Route = createFileRoute('/carrinho')({
-  component: function CartRoute() {
-    return <UnderConstruction title="Carrinho de NFTs" />
-  },
+  component: CartPage,
 })
