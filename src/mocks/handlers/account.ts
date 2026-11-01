@@ -33,6 +33,17 @@ function findOwnWallet(userId: string, walletId: string): WalletRecord {
   return wallet
 }
 
+/** The same address under two roles would make "another wallet" mean nothing. */
+function assertAddressIsFree(userId: string, address: string | undefined, walletId?: string): void {
+  const taken = getDb().wallets.some(
+    (wallet) =>
+      wallet.userId === userId &&
+      wallet.id !== walletId &&
+      wallet.address.toLowerCase() === address?.toLowerCase(),
+  )
+  if (taken) throw invalidFields({ address: ['Este endereço já está em outra carteira sua.'] })
+}
+
 function assertUsernameIsFree(user: UserRecord, username: string | undefined): void {
   const taken = getDb().users.some((other) => other.username === username && other.id !== user.id)
   if (taken) {
@@ -96,6 +107,7 @@ export const accountHandlers = [
     if (db.wallets.some((wallet) => wallet.userId === userId && wallet.role === input.role)) {
       throw invalidFields({ role: ['Esta posição de carteira já está em uso.'] })
     }
+    assertAddressIsFree(userId, input.address)
 
     const wallet: WalletRecord = {
       ...input,
@@ -111,9 +123,27 @@ export const accountHandlers = [
   route('patch', '/wallets/:id', async (context) => {
     const { id: userId } = requireUser()
     const wallet = findOwnWallet(userId, param(context, 'id'))
+    const input = await readBody(context.request, updateWalletInputSchema)
+    const isOtherAccount =
+      (input.address !== undefined && input.address !== wallet.address) ||
+      (input.network !== undefined && input.network !== wallet.network) ||
+      (input.type !== undefined && input.type !== wallet.type)
 
-    Object.assign(wallet, await readBody(context.request, updateWalletInputSchema))
+    if (input.address !== undefined) assertAddressIsFree(userId, input.address, wallet.id)
+    Object.assign(wallet, input)
+    // The connection belonged to what the wallet was: the new one must be approved.
+    if (isOtherAccount) wallet.connected = false
     return HttpResponse.json(toWallet(wallet))
+  }),
+
+  route('post', '/wallets/:id/primary', (context) => {
+    const { id: userId } = requireUser()
+    const wallet = findOwnWallet(userId, param(context, 'id'))
+    const wallets = getDb().wallets.filter((item) => item.userId === userId)
+
+    // A swap, so there is never a moment with two primaries or none.
+    for (const item of wallets) item.role = item === wallet ? 'primary' : 'secondary'
+    return HttpResponse.json({ items: wallets.map(toWallet) })
   }),
 
   route('post', '/wallets/:id/connect', (context) => {

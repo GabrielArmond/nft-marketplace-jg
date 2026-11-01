@@ -49,6 +49,14 @@ export function updateWallet(id: string, input: UpdateWalletInput): Promise<Wall
   })
 }
 
+/** The other wallet becomes secondary: the answer is the whole list. */
+export function setPrimaryWallet(id: string): Promise<WalletList> {
+  return requestJson(walletListSchema, {
+    method: 'POST',
+    url: `/wallets/${encodeURIComponent(id)}/primary`,
+  })
+}
+
 export function connectWallet(id: string): Promise<Wallet> {
   return requestJson(walletSchema, {
     method: 'POST',
