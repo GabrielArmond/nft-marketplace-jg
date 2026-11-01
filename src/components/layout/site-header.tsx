@@ -22,9 +22,18 @@ function AccountAction() {
     return (
       <Link
         to="/perfil"
-        className="max-w-40 truncate text-base font-medium hover:text-content-accent"
+        className="flex max-w-48 items-center gap-2 text-base font-medium hover:text-content-accent"
       >
-        {session.user.displayName}
+        {session.user.avatarUrl && (
+          <img
+            src={session.user.avatarUrl}
+            alt=""
+            width={28}
+            height={28}
+            className="size-7 shrink-0 rounded-full object-cover"
+          />
+        )}
+        <span className="truncate">{session.user.displayName}</span>
       </Link>
     )
   }
