@@ -1,9 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { UnderConstruction } from '@/components/feedback/under-construction'
+import { FavoritesPage } from '@/features/favorites/pages/favorites-page'
 
 export const Route = createFileRoute('/_private/favoritos')({
-  component: function FavoritesRoute() {
-    return <UnderConstruction title="Lista de interesse" />
-  },
+  component: FavoritesPage,
 })
