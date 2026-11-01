@@ -143,7 +143,7 @@ function buildNft(seed: NftSeed, index: number): NftRecord {
     soldOut: seed.soldOut,
     listedAt: new Date(FIRST_LISTED_AT_MS - index * DAY_MS).toISOString(),
     version: 1,
-    description: `${seed.name} é um colecionável digital finalizado à mão da coleção Kurio Editions, verificado e pronto para a sua carteira.`,
+    description: `${seed.name} é um colecionável digital finalizado à mão da coleção Kurio Editions, verificado e pronto para a sua carteira. \n AAAA`,
     attributes: ['Óculos', 'Esmeralda', seed.isRare ? 'Raro' : 'Comum'],
     gallery: ART_ORDER.map((art) => image(art, ART_ALT[art])),
     defaultEditionId: `${id}:1-50`,

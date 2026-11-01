@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 
 // Focus is drawn by the global :focus-visible rule in globals.css.
 const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-2 border border-transparent font-bold whitespace-nowrap transition-colors select-none disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
+  "inline-flex shrink-0 items-center justify-center gap-2 border border-transparent font-bold whitespace-nowrap transition-colors select-none disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5 cursor-pointer",
   {
     variants: {
       variant: {
