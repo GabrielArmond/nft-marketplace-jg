@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useSession } from '@/features/auth/hooks'
 import { dropExpiredSession, readCachedSession } from '@/features/auth/queries'
 import { onSessionExpired } from '@/features/auth/session-expiry'
+import { startNftRealtimeSync } from '@/features/catalog/nft-realtime-sync'
 import { disconnectRealtime, restartRealtime } from '@/lib/realtime/socket-client'
 
 /** App-wide reactions to the session. Renders nothing. */
@@ -26,6 +27,8 @@ export function SessionLifecycle() {
       }),
     [queryClient, router],
   )
+
+  useEffect(() => startNftRealtimeSync(queryClient), [queryClient])
 
   // The server binds the socket to the session at handshake: a new user needs a new one.
   useEffect(() => {
