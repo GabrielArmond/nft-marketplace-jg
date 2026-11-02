@@ -1,0 +1,13 @@
+page,profile,run,performance,accessibility,best-practices,seo,lcp_ms,cls,tbt_ms,status
+"Home",mobile,1,77,95,100,92,4146,0,398,ok
+"Home",mobile,2,80,95,100,92,4039,0,301,ok
+"Home",mobile,3,80,95,100,92,4080,0,293,ok
+"Home",desktop,1,99,97,100,92,917,0.0002,5,ok
+"Home",desktop,2,99,97,100,92,934,0.0002,0,ok
+"Home",desktop,3,99,97,100,92,939,0.0002,6,ok
+"Detalhe do NFT",mobile,1,80,96,100,92,4036,0,312,ok
+"Detalhe do NFT",mobile,2,80,96,100,92,4037,0,317,ok
+"Detalhe do NFT",mobile,3,80,96,100,92,4037,0,323,ok
+"Detalhe do NFT",desktop,1,99,97,100,92,900,0,0,ok
+"Detalhe do NFT",desktop,2,99,97,100,92,907,0,0,ok
+"Detalhe do NFT",desktop,3,99,97,100,92,899,0,0,ok

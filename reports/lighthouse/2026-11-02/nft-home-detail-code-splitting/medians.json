@@ -1,0 +1,74 @@
+[
+  {
+    "page": "Home",
+    "slug": "home",
+    "profile": "mobile",
+    "runs": 3,
+    "performance": 80,
+    "accessibility": 95,
+    "best-practices": 100,
+    "seo": 92,
+    "lcp_ms": 4080,
+    "cls": 0,
+    "tbt_ms": 301,
+    "reports": [
+      "home-mobile-run-1",
+      "home-mobile-run-2",
+      "home-mobile-run-3"
+    ]
+  },
+  {
+    "page": "Home",
+    "slug": "home",
+    "profile": "desktop",
+    "runs": 3,
+    "performance": 99,
+    "accessibility": 97,
+    "best-practices": 100,
+    "seo": 92,
+    "lcp_ms": 934,
+    "cls": 0.0002,
+    "tbt_ms": 5,
+    "reports": [
+      "home-desktop-run-1",
+      "home-desktop-run-2",
+      "home-desktop-run-3"
+    ]
+  },
+  {
+    "page": "Detalhe do NFT",
+    "slug": "nft-detail",
+    "profile": "mobile",
+    "runs": 3,
+    "performance": 80,
+    "accessibility": 96,
+    "best-practices": 100,
+    "seo": 92,
+    "lcp_ms": 4037,
+    "cls": 0,
+    "tbt_ms": 317,
+    "reports": [
+      "nft-detail-mobile-run-1",
+      "nft-detail-mobile-run-2",
+      "nft-detail-mobile-run-3"
+    ]
+  },
+  {
+    "page": "Detalhe do NFT",
+    "slug": "nft-detail",
+    "profile": "desktop",
+    "runs": 3,
+    "performance": 99,
+    "accessibility": 97,
+    "best-practices": 100,
+    "seo": 92,
+    "lcp_ms": 900,
+    "cls": 0,
+    "tbt_ms": 0,
+    "reports": [
+      "nft-detail-desktop-run-1",
+      "nft-detail-desktop-run-2",
+      "nft-detail-desktop-run-3"
+    ]
+  }
+]

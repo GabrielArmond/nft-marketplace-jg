@@ -1,0 +1,80 @@
+{
+  "configVersion": 1,
+  "auditDate": "2026-11-02",
+  "sourceRevision": "0cad63b + working-tree lazy route split and catalog loading changes",
+  "target": "Optimized Vite demo build served locally, with default MSW mocks",
+  "buildCommand": "npm run build:demo",
+  "previewCommand": "npm run preview -- --host 127.0.0.1 --port 4173 --strictPort",
+  "baseUrl": "http://127.0.0.1:4173",
+  "mockConfiguration": {
+    "enabled": true,
+    "scenario": "default",
+    "seed": 1,
+    "latency": "scenario default (fixed 120 ms per REST request)",
+    "resetUrl": "/?mock_reset=1&mock_scenario=default"
+  },
+  "pages": [
+    {
+      "name": "Home",
+      "path": "/"
+    },
+    {
+      "name": "NFT detail",
+      "path": "/nft/emerald-ape-042"
+    }
+  ],
+  "profiles": {
+    "mobile": "Lighthouse default mobile preset and throttling",
+    "desktop": "Lighthouse desktop preset and throttling"
+  },
+  "runsPerPageAndProfile": 3,
+  "categories": [
+    "performance",
+    "accessibility",
+    "best-practices",
+    "seo"
+  ],
+  "reportedMetrics": [
+    "largest-contentful-paint",
+    "cumulative-layout-shift",
+    "total-blocking-time"
+  ],
+  "reportFormats": [
+    "html",
+    "json"
+  ],
+  "lighthouseFlags": [
+    "--disable-storage-reset",
+    "--only-categories=performance,accessibility,best-practices,seo",
+    "--output=html,json"
+  ],
+  "runConditions": {
+    "freshBrowserProfilePerRun": true,
+    "mockServiceWorkerReadyBeforeAudit": true,
+    "browserHttpCacheClearedAfterSetup": true,
+    "storageResetDisabledForAudit": true,
+    "networkRequestBlocking": false,
+    "pageFeaturesSimplified": false,
+    "imagesAndFonts": "Loaded from the built app during the audited page navigation; not blocked or replaced",
+    "changesUnderAudit": [
+      "The first catalog card image is eager and fetch-prioritized; remaining cards retain lazy loading",
+      "Home and NFT detail queries start in route loaders and share React Query cache",
+      "NFT detail skeleton reserves space for tabs and related NFT cards",
+      "Home and NFT detail route components are defined in .lazy.tsx files and loaded on demand",
+      "Images, fonts, mock data and app functionality are enabled during the audit; no request blocking or page simplification"
+    ]
+  },
+  "tools": {
+    "lighthouse": "13.6.0",
+    "chrome": "Google Chrome for Testing 156.0.8078.4",
+    "node": "v24.20.0",
+    "vite": "8.3.5",
+    "typescript": "6.0.3"
+  },
+  "environment": {
+    "os": "Linux 6.18.54.1-microsoft-standard-WSL2 (x86_64)",
+    "cpu": "Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz",
+    "logicalCpus": 12,
+    "memoryGiB": 7.7
+  }
+}
