@@ -567,7 +567,13 @@ function CheckoutGate({ userId, cart, profile, wallets }: CheckoutFormProps) {
   return (
     <div className="pt-8 pb-10 page-container">
       <PageHeading />
-      <CheckoutForm userId={userId} cart={cart} profile={profile} wallets={wallets} />
+      <CheckoutForm
+        key={userId}
+        userId={userId}
+        cart={cart}
+        profile={profile}
+        wallets={wallets}
+      />
     </div>
   )
 }
