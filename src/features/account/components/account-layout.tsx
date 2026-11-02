@@ -1,27 +1,46 @@
 import { Link, useNavigate } from '@tanstack/react-router'
-import { useState, type ReactNode } from 'react'
+import { useState, type ComponentType, type ReactNode, type SVGProps } from 'react'
 
+import {
+  ActivityOutlineIcon,
+  AlertTriangleOutlineIcon,
+  DownloadOutlineIcon,
+  HeartLineIcon,
+  LocationPinOutlineIcon,
+  LogoutOutlineIcon,
+  ShoppingOutlineIcon,
+  UserOutlineIcon,
+} from '@/components/icons/icons'
 import { useLogout } from '@/features/auth/hooks'
 import { isApiError, normalizeApiError } from '@/lib/http/api-error'
-import { CartIcon, DownloadOutlineIcon, HeartOutlineIcon, OfferOutlineIcon, SignOutOutlineIcon, SupportOutlineIcon, UserOutlineIcon, WalletOutlineIcon } from '@/components/icons/icons'
+import { cn } from '@/lib/utils'
 
-const ICON_SIZE = 'h-[18px] w-[18px]'
 const ITEM =
-  'flex h-11 shrink-0 items-center whitespace-nowrap px-4 text-md text-content-accent xl:h-11.25'
+  'group flex h-11.25 w-full shrink-0 items-center whitespace-nowrap px-4 text-left text-md text-content-accent transition-colors duration-300 ease-in-out hover:text-primary'
+// The Figma marks the current page with an inner 6px bar and a stronger icon.
 const LINK_STATES = {
-  activeProps: { className: 'border-l-4 border-primary bg-background/5 font-bold text-primary' },
-  inactiveProps: { className: 'border-l-4 border-transparent' },
+  activeProps: { className: 'shadow-[inset_6px_0_0_var(--color-primary)]' },
 } as const
-const AVAILABLE = [
-  { label: 'Dados do perfil', icon: <UserOutlineIcon className={ICON_SIZE} />, to: '/perfil' },
-  { label: 'Carteiras', icon: <WalletOutlineIcon className={ICON_SIZE} />, to: '/carteiras' },
-  { label: 'Lista de interesse', icon: <HeartOutlineIcon className={ICON_SIZE} />, to: '/favoritos' }]
-const UNAVAILABLE = [
-  { label: 'Atividade', icon: <CartIcon className={ICON_SIZE} /> },
-  { label: 'Ofertas', icon: <OfferOutlineIcon className={ICON_SIZE} /> },
-  { label: 'Arquivos baixados', icon: <DownloadOutlineIcon className={ICON_SIZE} /> },
-  { label: 'Suporte', icon: <SupportOutlineIcon className={ICON_SIZE} /> }]
+const ICON = 'shrink-0 text-content-subtle group-data-[status=active]:text-primary'
 
+interface MenuItem {
+  label: string
+  icon: ComponentType<SVGProps<SVGSVGElement>>
+  /** Each row of the Figma has its own icon box and gap: the text does not line up. */
+  iconClass: string
+  gapClass: string
+  to?: '/perfil' | '/carteiras' | '/favoritos'
+}
+
+const MENU: readonly MenuItem[] = [
+  { label: 'Dados do perfil', icon: UserOutlineIcon, iconClass: 'size-4.5', gapClass: 'gap-4', to: '/perfil' },
+  { label: 'Carteiras', icon: LocationPinOutlineIcon, iconClass: 'size-5', gapClass: 'gap-3', to: '/carteiras' },
+  { label: 'Atividade', icon: ShoppingOutlineIcon, iconClass: 'size-4.5', gapClass: 'gap-3' },
+  { label: 'Lista de interesse', icon: HeartLineIcon, iconClass: 'size-4', gapClass: 'gap-3', to: '/favoritos' },
+  { label: 'Ofertas', icon: ActivityOutlineIcon, iconClass: 'size-4.5', gapClass: 'gap-3' },
+  { label: 'Arquivos baixados', icon: DownloadOutlineIcon, iconClass: 'size-4.5', gapClass: 'gap-3' },
+  { label: 'Suporte', icon: AlertTriangleOutlineIcon, iconClass: 'size-4.5', gapClass: 'gap-3' },
+]
 
 /** Frame of the private account screens. Actions outside this delivery say so. */
 export function AccountLayout({ children }: { children: ReactNode }) {
@@ -31,36 +50,35 @@ export function AccountLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="grid gap-6 pt-6 pb-10 page-container xl:grid-cols-[19.375rem_minmax(0,1fr)] xl:gap-7">
-      <aside className="flex h-fit min-w-0 flex-col gap-1 self-start bg-card">
-        <p className="px-2.5 py-2.5 text-lg leading-4 font-bold">Meu perfil</p>
+      <aside className="flex h-fit min-w-0 flex-col self-start bg-card py-2">
+        <p className="p-2.5 text-lg leading-4 font-bold">Meu perfil</p>
         <nav aria-label="Minha conta">
-          <ul className="flex gap-1 overflow-x-auto pb-1 xl:flex-col xl:overflow-visible">
-            {AVAILABLE.map((item) => (
-              <li key={item.label}>
-                <Link to={item.to} className={`${ITEM} w-full text-left flex items-center gap-3 hover:text-primary duration-300 ease-in-out`} {...LINK_STATES}>
-                  {item.icon}
-                  {item.label}
-                </Link>
+          <ul className="flex overflow-x-auto xl:flex-col xl:overflow-visible">
+            {MENU.map(({ label, icon: Icon, iconClass, gapClass, to }) => (
+              <li key={label}>
+                {to ? (
+                  <Link to={to} className={cn(ITEM, gapClass)} {...LINK_STATES}>
+                    <Icon className={cn(ICON, iconClass)} />
+                    {label}
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    className={cn(ITEM, gapClass, 'cursor-pointer')}
+                    onClick={() => {
+                      setNotice(`${label} não está disponível.`)
+                    }}
+                  >
+                    <Icon className={cn(ICON, iconClass)} />
+                    {label}
+                  </button>
+                )}
               </li>
             ))}
-            {UNAVAILABLE.map((item) => (
-              <li key={item.label}>
-                <button
-                  type="button"
-                  className={`${ITEM} w-full border border-transparent text-left flex items-center gap-3 cursor-pointer hover:text-primary duration-300 ease-in-out`}
-                  onClick={() => {
-                    setNotice(`${item.label} não está disponível.`)
-                  }}
-                >
-                  {item.icon}
-                  {item.label}
-                </button>
-              </li>
-            ))}
-            <li className="border-t border-primary">
+            <li className="border-primary/30 xl:border-t">
               <button
                 type="button"
-                className={`${ITEM} w-full border border-transparent text-left flex items-center gap-2 cursor-pointer hover:text-primary duration-300 ease-in-out`}
+                className={cn(ITEM, 'h-11 cursor-pointer gap-2 font-bold xl:h-10')}
                 onClick={() => {
                   logout.mutate(undefined, {
                     onSuccess: () => {
@@ -69,7 +87,7 @@ export function AccountLayout({ children }: { children: ReactNode }) {
                   })
                 }}
               >
-                <SignOutOutlineIcon className={ICON_SIZE} />
+                <LogoutOutlineIcon className="size-5 shrink-0 text-primary" />
                 {logout.isPending ? 'Saindo...' : 'Sair'}
               </button>
               {logout.error && !isApiError(logout.error, 'unauthorized') && (
@@ -80,7 +98,7 @@ export function AccountLayout({ children }: { children: ReactNode }) {
             </li>
           </ul>
         </nav>
-        <p role="status" className="px-4 text-xs text-content-secondary empty:hidden mb-5">
+        <p role="status" className="px-4 pt-2 text-xs text-content-secondary empty:hidden">
           {notice}
         </p>
       </aside>

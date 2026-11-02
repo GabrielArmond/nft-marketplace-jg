@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { Fragment } from 'react'
 
+import { ThankYouIcon } from '@/components/icons/icons'
 import { Button } from '@/components/ui/button'
 import type { Receipt as ReceiptData } from '@/contracts/orders'
 import { NETWORK_LABELS } from '@/features/catalog/search-params'
@@ -27,16 +28,7 @@ export function Receipt({ receipt }: { receipt: ReceiptData }) {
   return (
     <article className="relative mx-auto my-6 w-full max-w-144.5 border-b-10 border-primary bg-card md:my-10">
       <header className="flex flex-col items-center gap-4 border-b border-primary px-6 py-6 text-center">
-        <svg viewBox="0 0 80 80" fill="none" aria-hidden="true" className="size-20 text-primary">
-          <circle cx="40" cy="40" r="36" stroke="currentColor" strokeWidth="4" />
-          <path
-            d="m24 41 11 11 21-23"
-            stroke="currentColor"
-            strokeWidth="5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <ThankYouIcon className="size-20 text-primary" />
         <h1 className="text-base leading-5 font-bold text-content-secondary">
           Seus NFTs agora estão na sua carteira
         </h1>
