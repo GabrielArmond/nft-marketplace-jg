@@ -10,6 +10,8 @@ import { useCartCount } from '@/features/cart/hooks'
 import { cn } from '@/lib/utils'
 
 const NAV_ITEM = 'border-b-2 pb-6 text-base'
+const NAV_ACTIVE = 'border-primary font-bold text-content-accent'
+const NAV_INACTIVE = 'border-transparent hover:border-primary/50 hover:text-content-accent'
 const MARKET_PATHS = ['/nft/', '/carrinho']
 
 function AccountAction() {
@@ -47,16 +49,16 @@ function AccountAction() {
   )
 }
 
-/** Desktop and tablet only: below `md` the Figma navigation is the bottom tab bar. */
 export function SiteHeader() {
   const cartCount = useCartCount()
   const inMarket = useRouterState({
-    select: ({ location }) => MARKET_PATHS.some((path) => location.pathname.startsWith(path)),
+    select: ({ location }) =>
+      location.hash === '#catalogo' ||
+      MARKET_PATHS.some((path) => location.pathname.startsWith(path)),
   })
 
   return (
     <header className="page-container hidden md:block">
-      {/* The Figma divider is 0.3px wide: 30% opacity is how it renders on a 1px grid. */}
       <div className="flex items-end justify-between gap-6 border-b border-primary/30 pt-7 xl:grid xl:grid-cols-[10rem_1fr_auto]">
         <Link to="/" className="pb-5 text-sm font-bold tracking-wide">
           KURIO
@@ -68,8 +70,8 @@ export function SiteHeader() {
             hash=""
             activeOptions={{ exact: true, includeHash: true, includeSearch: false }}
             className={NAV_ITEM}
-            activeProps={{ className: 'border-primary font-bold text-content-accent' }}
-            inactiveProps={{ className: 'border-transparent' }}
+            activeProps={{ className: NAV_ACTIVE }}
+            inactiveProps={{ className: NAV_INACTIVE }}
           >
             Início
           </Link>
@@ -79,20 +81,24 @@ export function SiteHeader() {
             aria-current={inMarket ? 'page' : undefined}
             className={cn(
               NAV_ITEM,
-              inMarket ? 'border-primary font-bold text-content-accent' : 'border-transparent',
+              inMarket ? NAV_ACTIVE : NAV_INACTIVE,
             )}
           >
             Mercado
           </Link>
           <Link
             to="/criadores"
-            className={cn(NAV_ITEM, 'border-transparent')}
+            className={NAV_ITEM}
+            activeProps={{ className: NAV_ACTIVE }}
+            inactiveProps={{ className: NAV_INACTIVE }}
           >
             Criadores
           </Link>
           <Link
             to="/aprenda"
-            className={cn(NAV_ITEM, 'border-transparent')}
+            className={NAV_ITEM}
+            activeProps={{ className: NAV_ACTIVE }}
+            inactiveProps={{ className: NAV_INACTIVE }}
           >
             Aprenda
           </Link>
