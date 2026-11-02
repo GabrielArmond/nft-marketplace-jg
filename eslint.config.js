@@ -8,7 +8,13 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default defineConfig([
-  globalIgnores(['dist', 'src/routeTree.gen.ts', 'public/mockServiceWorker.js']),
+  globalIgnores([
+    'dist',
+    'src/routeTree.gen.ts',
+    'public/mockServiceWorker.js',
+    'playwright-report',
+    'test-results',
+  ]),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -56,6 +62,13 @@ export default defineConfig([
     files: ['src/routes/**/*.tsx'],
     rules: {
       '@typescript-eslint/only-throw-error': 'off',
+    },
+  },
+  {
+    // Playwright fixtures call their continuation `use`, which is not the React hook.
+    files: ['e2e/**/*.ts'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
     },
   },
   {
