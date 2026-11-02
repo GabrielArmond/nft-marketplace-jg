@@ -11,8 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PrivateRouteImport } from './routes/_private'
+import { Route as AprendaRouteImport } from './routes/aprenda'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as CarrinhoRouteImport } from './routes/carrinho'
+import { Route as CriadoresRouteImport } from './routes/criadores'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PrivateCarteirasRouteImport } from './routes/_private/carteiras'
 import { Route as PrivateFavoritosRouteImport } from './routes/_private/favoritos'
@@ -30,6 +32,11 @@ const PrivateRoute = PrivateRouteImport.update({
   id: '/_private',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AprendaRoute = AprendaRouteImport.update({
+  id: '/aprenda',
+  path: '/aprenda',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CadastroRoute = CadastroRouteImport.update({
   id: '/cadastro',
   path: '/cadastro',
@@ -38,6 +45,11 @@ const CadastroRoute = CadastroRouteImport.update({
 const CarrinhoRoute = CarrinhoRouteImport.update({
   id: '/carrinho',
   path: '/carrinho',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CriadoresRoute = CriadoresRouteImport.update({
+  id: '/criadores',
+  path: '/criadores',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -78,8 +90,10 @@ const PrivatePedidoIdRoute = PrivatePedidoIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aprenda': typeof AprendaRoute
   '/cadastro': typeof CadastroRoute
   '/carrinho': typeof CarrinhoRoute
+  '/criadores': typeof CriadoresRoute
   '/login': typeof LoginRoute
   '/carteiras': typeof PrivateCarteirasRoute
   '/favoritos': typeof PrivateFavoritosRoute
@@ -90,8 +104,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aprenda': typeof AprendaRoute
   '/cadastro': typeof CadastroRoute
   '/carrinho': typeof CarrinhoRoute
+  '/criadores': typeof CriadoresRoute
   '/login': typeof LoginRoute
   '/carteiras': typeof PrivateCarteirasRoute
   '/favoritos': typeof PrivateFavoritosRoute
@@ -104,8 +120,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_private': typeof PrivateRouteWithChildren
+  '/aprenda': typeof AprendaRoute
   '/cadastro': typeof CadastroRoute
   '/carrinho': typeof CarrinhoRoute
+  '/criadores': typeof CriadoresRoute
   '/login': typeof LoginRoute
   '/_private/carteiras': typeof PrivateCarteirasRoute
   '/_private/favoritos': typeof PrivateFavoritosRoute
@@ -118,8 +136,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/aprenda'
     | '/cadastro'
     | '/carrinho'
+    | '/criadores'
     | '/login'
     | '/carteiras'
     | '/favoritos'
@@ -130,8 +150,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/aprenda'
     | '/cadastro'
     | '/carrinho'
+    | '/criadores'
     | '/login'
     | '/carteiras'
     | '/favoritos'
@@ -143,8 +165,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_private'
+    | '/aprenda'
     | '/cadastro'
     | '/carrinho'
+    | '/criadores'
     | '/login'
     | '/_private/carteiras'
     | '/_private/favoritos'
@@ -157,8 +181,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PrivateRoute: typeof PrivateRouteWithChildren
+  AprendaRoute: typeof AprendaRoute
   CadastroRoute: typeof CadastroRoute
   CarrinhoRoute: typeof CarrinhoRoute
+  CriadoresRoute: typeof CriadoresRoute
   LoginRoute: typeof LoginRoute
   NftIdRoute: typeof NftIdRoute
 }
@@ -179,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/aprenda': {
+      id: '/aprenda'
+      path: '/aprenda'
+      fullPath: '/aprenda'
+      preLoaderRoute: typeof AprendaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cadastro': {
       id: '/cadastro'
       path: '/cadastro'
@@ -191,6 +224,13 @@ declare module '@tanstack/react-router' {
       path: '/carrinho'
       fullPath: '/carrinho'
       preLoaderRoute: typeof CarrinhoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/criadores': {
+      id: '/criadores'
+      path: '/criadores'
+      fullPath: '/criadores'
+      preLoaderRoute: typeof CriadoresRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -267,8 +307,10 @@ const PrivateRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PrivateRoute: PrivateRouteWithChildren,
+  AprendaRoute: AprendaRoute,
   CadastroRoute: CadastroRoute,
   CarrinhoRoute: CarrinhoRoute,
+  CriadoresRoute: CriadoresRoute,
   LoginRoute: LoginRoute,
   NftIdRoute: NftIdRoute,
 }

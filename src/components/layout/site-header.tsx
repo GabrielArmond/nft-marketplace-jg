@@ -9,7 +9,6 @@ import { authModalTarget } from '@/features/auth/redirect'
 import { useCartCount } from '@/features/cart/hooks'
 import { cn } from '@/lib/utils'
 
-const UNAVAILABLE_ITEMS = ['Criadores', 'Aprenda']
 const NAV_ITEM = 'border-b-2 pb-6 text-base'
 const MARKET_PATHS = ['/nft/', '/carrinho']
 
@@ -85,16 +84,18 @@ export function SiteHeader() {
           >
             Mercado
           </Link>
-          {UNAVAILABLE_ITEMS.map((item) => (
-            <span
-              key={item}
-              aria-disabled="true"
-              title="Em breve"
-              className={`${NAV_ITEM} border-transparent opacity-60`}
-            >
-              {item}
-            </span>
-          ))}
+          <Link
+            to="/criadores"
+            className={cn(NAV_ITEM, 'border-transparent')}
+          >
+            Criadores
+          </Link>
+          <Link
+            to="/aprenda"
+            className={cn(NAV_ITEM, 'border-transparent')}
+          >
+            Aprenda
+          </Link>
         </nav>
 
         <div className="flex items-center gap-7 pb-2.5">
