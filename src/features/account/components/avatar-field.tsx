@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { UserIcon } from '@/components/icons/icons'
 import { Button } from '@/components/ui/button'
@@ -9,6 +9,7 @@ import { isApiError, normalizeApiError } from '@/lib/http/api-error'
 export function AvatarField({ avatarUrl }: { avatarUrl: string | null }) {
   const input = useRef<HTMLInputElement>(null)
   const change = useRef<HTMLButtonElement>(null)
+  const moveFocus = useRef(false)
   const update = useUpdateAvatar()
   const remove = useRemoveAvatar()
   const [message, setMessage] = useState<string | null>(null)
@@ -37,14 +38,20 @@ export function AvatarField({ avatarUrl }: { avatarUrl: string | null }) {
     try {
       await remove.mutateAsync()
       setMessage('Avatar removido.')
-      // "Remover" is now disabled: without this the focus would fall to the body.
-      requestAnimationFrame(() => {
-        change.current?.focus()
-      })
+      moveFocus.current = true
     } catch (error) {
       fail(error)
     }
   }
+
+  // "Remover" ends up disabled, which would drop the focus on the body. An effect
+  // runs once the other button is enabled again; a timer would race with that.
+  useEffect(() => {
+    if (moveFocus.current && !busy && !avatarUrl) {
+      moveFocus.current = false
+      change.current?.focus()
+    }
+  })
 
   return (
     <div className="flex flex-col gap-2.5">
