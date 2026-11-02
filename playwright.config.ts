@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test'
 
-const PORT = 4173
+const PORT = Number(process.env.PLAYWRIGHT_PORT ?? 4173)
 const BASE_URL = `http://localhost:${PORT.toString()}`
 
 export default defineConfig({
@@ -34,6 +34,14 @@ export default defineConfig({
       use: {
         ...devices['Pixel 7'],
         viewport: { width: 390, height: 844 },
+        deviceScaleFactor: 1,
+      },
+    },
+    {
+      name: 'tablet',
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 768, height: 1024 },
         deviceScaleFactor: 1,
       },
     },

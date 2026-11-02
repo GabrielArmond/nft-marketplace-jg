@@ -2,16 +2,18 @@ import { expect, test, type App } from './support/fixtures.ts'
 
 /** The panel sits on the page on desktop and inside a dialog on mobile. */
 async function toggleFilters(app: App, names: RegExp[]): Promise<void> {
-  const { page, isMobile } = app
+  const { page } = app
+  const openButton = page.getByRole('button', { name: /^Abrir filtros/ }).filter({ visible: true })
+  const usesDialog = (await openButton.count()) > 0
 
-  if (isMobile) await page.getByRole('button', { name: /^Abrir filtros/ }).first().click()
-  const panel = isMobile ? page.getByRole('dialog', { name: 'Filtros' }) : page.locator('#catalogo')
+  if (usesDialog) await openButton.first().click()
+  const panel = usesDialog ? page.getByRole('dialog', { name: 'Filtros' }) : page.locator('#catalogo')
   await panel.waitFor()
   for (const name of names) {
     // The native input is visually hidden: people click its label.
     await panel.locator('label').filter({ hasText: name }).first().click()
   }
-  if (isMobile) await page.getByRole('button', { name: /^Ver \d* ?resultados?/ }).click()
+  if (usesDialog) await page.getByRole('button', { name: /^Ver \d* ?resultados?/ }).click()
 }
 
 function search(app: App): URLSearchParams {
