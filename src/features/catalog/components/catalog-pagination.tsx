@@ -31,7 +31,7 @@ export function CatalogPagination({ search, totalPages }: CatalogPaginationProps
   if (totalPages <= 1) return null
 
   return (
-    <nav aria-label="Paginação" className="mt-16 flex justify-end md:mt-22">
+    <nav aria-label="Paginação" className="mt-16 flex justify-center md:justify-end md:mt-22">
       <ul className="flex flex-wrap gap-2">
         {visiblePages(current, totalPages).map((page, index) => (
           <li key={page ?? `gap-${index.toString()}`}>
@@ -49,7 +49,7 @@ export function CatalogPagination({ search, totalPages }: CatalogPaginationProps
                 className={cn(
                   PAGE_LINK,
                   page === current &&
-                    'border-primary bg-primary font-bold text-primary-foreground',
+                  'border-primary bg-primary font-bold text-primary-foreground',
                 )}
               >
                 {page}
