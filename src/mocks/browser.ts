@@ -3,7 +3,6 @@ import { setupWorker } from 'msw/browser'
 import { syncAcrossTabs } from '@/mocks/db/store'
 import { applyUrlOverrides } from '@/mocks/engine/bootstrap'
 import { startSettlementLoop } from '@/mocks/engine/engine'
-import { exposeHarness } from '@/mocks/harness'
 import { accountHandlers } from '@/mocks/handlers/account'
 import { authHandlers } from '@/mocks/handlers/auth'
 import { cartHandlers } from '@/mocks/handlers/cart'
@@ -41,5 +40,4 @@ export async function enableMocks(): Promise<void> {
   })
 
   startSettlementLoop()
-  exposeHarness()
 }
