@@ -161,8 +161,8 @@ export function CatalogResults({ query, search }: CatalogResultsProps) {
         aria-busy={isPlaceholderData}
         className={cn(GRID, 'transition-opacity', isPlaceholderData && 'opacity-60')}
       >
-        {data.items.map((nft) => (
-          <NftCard key={nft.id} nft={nft} />
+        {data.items.map((nft, index) => (
+          <NftCard key={nft.id} nft={nft} priority={index === 0} />
         ))}
       </div>
       <CatalogPagination search={search} totalPages={data.totalPages} />

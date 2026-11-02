@@ -19,7 +19,7 @@ function Tag({ label }: { label: string }) {
   )
 }
 
-export function NftCard({ nft }: { nft: NftSummary }) {
+export function NftCard({ nft, priority = false }: { nft: NftSummary; priority?: boolean }) {
   const { id, image, name, priceEth, compareAtPriceEth, isRare, soldOut } = nft
 
   return (
@@ -36,7 +36,8 @@ export function NftCard({ nft }: { nft: NftSummary }) {
             alt={image.alt}
             width={250}
             height={250}
-            loading="lazy"
+            loading={priority ? 'eager' : 'lazy'}
+            fetchPriority={priority ? 'high' : 'auto'}
             decoding="async"
             className={`${ART} w-[calc(100%-0.5rem)]`}
           />

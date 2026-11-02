@@ -1,7 +1,10 @@
 import { Skeleton } from '@/components/ui/skeleton'
+import { NftCardSkeleton } from '@/features/catalog/components/nft-card'
 
 const THUMBNAILS = ['a', 'b', 'c', 'd']
 const LINES = ['a', 'b', 'c']
+const STORY_LINES = ['a', 'b', 'c', 'd']
+const RELATED_CARDS = ['a', 'b', 'c', 'd', 'e', 'f']
 
 /** Mirrors the real grid so the page does not jump when the data lands. */
 export function NftDetailSkeleton() {
@@ -29,6 +32,36 @@ export function NftDetailSkeleton() {
           <Skeleton className="h-12.5 w-full" />
         </div>
       </div>
+
+      <div className="mt-8 flex flex-col gap-3 px-6 md:mt-20 md:px-0">
+        <div className="flex gap-6 border-b border-primary/30 pb-2 md:gap-8">
+          <Skeleton className="h-6 w-32" />
+          <Skeleton className="h-6 w-48" />
+        </div>
+        {STORY_LINES.map((item) => (
+          <Skeleton key={item} className="h-5 w-full" />
+        ))}
+        {LINES.map((item) => (
+          <div key={item} className="flex flex-col gap-2">
+            <Skeleton className="h-5 w-28" />
+            <Skeleton className="h-5 w-2/3" />
+          </div>
+        ))}
+      </div>
+
+      <section aria-hidden="true" className="mt-14 px-6 md:mt-20 md:px-0">
+        <Skeleton className="mb-8 h-8 w-full" />
+        <div className="flex snap-x gap-4 overflow-hidden pb-2 md:gap-7">
+          {RELATED_CARDS.map((item) => (
+            <div
+              key={item}
+              className="w-[calc(50%-0.5rem)] shrink-0 md:w-[calc((100%-3.5rem)/3)] lg:w-[calc((100%-7rem)/5)]"
+            >
+              <NftCardSkeleton />
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   )
 }

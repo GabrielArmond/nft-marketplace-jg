@@ -27,7 +27,7 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 const PrivateRoute = PrivateRouteImport.update({
   id: '/_private',
   getParentRoute: () => rootRouteImport,
@@ -81,7 +81,7 @@ const NftIdRoute = NftIdRouteImport.update({
   id: '/nft/$id',
   path: '/nft/$id',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any).lazy(() => import('./routes/nft.$id.lazy').then((d) => d.Route))
 const PrivatePedidoIdRoute = PrivatePedidoIdRouteImport.update({
   id: '/pedido/$id',
   path: '/pedido/$id',

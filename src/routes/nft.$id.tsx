@@ -1,9 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { NftDetailPage } from '@/features/nft/pages/nft-detail-page'
+import { nftDetailQueryOptions } from '@/features/catalog/queries'
+import { NftDetailSkeleton } from '@/features/nft/components/nft-detail-skeleton'
 
 export const Route = createFileRoute('/nft/$id')({
-  component: function NftRoute() {
-    return <NftDetailPage id={Route.useParams().id} />
+  loader: ({ context, params }) => {
+    // Start fetching as soon as the route matches; useQuery shares this request.
+    void context.queryClient
+      .query(nftDetailQueryOptions(params.id))
+      .catch(() => undefined)
   },
+  pendingComponent: NftDetailSkeleton,
 })
